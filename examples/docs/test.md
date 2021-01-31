@@ -5,8 +5,24 @@
 运行结果如下
 <zm-test bgColor="red"></zm-test>
 
-代码如下
-`<zm-test bgColor="red"></zm-test>`
+:::tip ### 描述标题 tiptip
+
+xxxxxxxxxxx
+
+:::
+
+:::warning ### 描述标题 warningwarning
+
+```html
+<template>
+  <zm-test bgColor="red"></zm-test>
+</template>
+<script>
+  console.log(1);
+</script>
+```
+
+:::
 
 :::demo ### 描述标题
 

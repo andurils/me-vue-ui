@@ -7,8 +7,10 @@
 
 "use strict";
 
+// cheerio实现了jQuery的一个子集 用在服务器端需要对DOM进行操作的地方
 var cheerio = require("cheerio");
 
+// 移除标签
 exports.strip = function(str, tags) {
   var $ = cheerio.load(str, { decodeEntities: false });
 
@@ -26,6 +28,7 @@ exports.strip = function(str, tags) {
   return $.html();
 };
 
+// 获取标签
 exports.fetch = function(str, tag) {
   var $ = cheerio.load(str, { decodeEntities: false });
   if (!tag) return str;

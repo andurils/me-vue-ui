@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+import "highlight.js/styles/color-brewer.css";
+
 Vue.config.productionTip = false;
 
 import DemoBlock from "./components/demo-block.vue";
