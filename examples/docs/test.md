@@ -1,42 +1,21 @@
 # 测试组件
- 
-测试组件是用来测试md文档是否能在项目中像vue文件一样正常展示代码运行结果
+
+测试组件是用来测试 md 文档是否能在项目中像 vue 文件一样正常展示代码运行结果
 
 运行结果如下
-
-<zm-test bgColor="blue"></zm-test>
+<zm-test bgColor="red"></zm-test>
 
 代码如下
-
 `<zm-test bgColor="red"></zm-test>`
 
-## 基础用法
+### 描述标题
 
-:::snippet 通过 `colorPicker` 标签初始化按钮。
-
-```html
-<template>
-  <div>
-    <colorPicker v-model="color" v-on:change="headleChangeColor"></colorPicker>
-  </div>
-</template>
-<script>
-export default {
-  data() {
-    return {
-      color: "#ff0000"
-    };
-  },
-  methods: {
-    headleChangeColor() {
-      console.log("颜色改变");
-    }
-  }
-};
-</script>
 ```
 
-:::
-
-
-### end
+<template>
+  <img src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+</template>
+<script>
+  console.log(1);
+</script>
+```
