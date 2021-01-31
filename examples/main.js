@@ -5,6 +5,9 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+import DemoBlock from "./components/demo-block.vue";
+Vue.component("demo-block", DemoBlock);
+
 // 组件引入
 import ZmUI from "../packages/index";
 Vue.use(ZmUI);

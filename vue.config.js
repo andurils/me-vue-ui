@@ -1,5 +1,5 @@
 const path = require("path");
-// const VueMarkDownOptions = require("./scripts/vue-markdown-loader.conf");
+const VueMarkDownOptions = require("./scripts/vue-markdown-loader.conf");
 
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "/me-vue-ui/" : "/",
@@ -42,8 +42,6 @@ module.exports = {
       .end()
       .use("vue-markdown-loader")
       .loader("vue-markdown-loader/lib/markdown-compiler")
-      .options({
-        raw: true
-      });
+      .options(VueMarkDownOptions);
   }
 };
