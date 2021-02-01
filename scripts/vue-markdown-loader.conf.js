@@ -5,7 +5,7 @@
  */
 
 const md = require("markdown-it")();
-const slugify = require("transliteration").slugify;
+const slugify = require("transliteration").slugify; // Universal Unicode to Latin transliteration + slugify module
 const striptags = require("./strip-tags");
 const hljs = require("highlight.js");
 module.exports = {
@@ -25,6 +25,7 @@ module.exports = {
           hljs.highlight(lang, str, true).value +
           "</code></pre>"
         );
+        // eslint-disable-next-line no-empty
       } catch (__) {}
     }
 
@@ -33,13 +34,14 @@ module.exports = {
     );
   },
   use: [
+    // 生成标题锚点
     [
       require("markdown-it-anchor"),
       {
-        level: 2,
-        slugify: slugify,
-        permalink: true,
-        permalinkBefore: true
+        level: 2, // 若传入数字，代表最少包含的渲染层级；若传入一个数组，则会渲染数组中选定的层级
+        slugify: slugify, // 生成有效url的自定义函数 function.
+        permalink: true, // 是否在标题旁加入永久链接
+        permalinkBefore: true // 将永久链接放在标题的前面.
       }
     ],
     // 使用【markdown-it-container】插件解析【:::demo :::】代码块为vue渲染
@@ -78,11 +80,6 @@ module.exports = {
                     <div class="source" slot="source">${html}</div>
                     ${descriptionHTML}
                     <div class="highlight" slot="highlight">`;
-
-            //         return `<demo-block>
-            // <div class="source" slot="source">${content}</div>
-            // ${descriptionHTML}
-            // <div class="highlight" slot="highlight">`;
           } else {
             return "</div></demo-block>\n";
           }

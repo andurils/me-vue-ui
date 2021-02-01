@@ -33,9 +33,9 @@
 export default {
   data() {
     return {
-      showCode: false
+      showCode: false,
     };
-  }
+  },
 };
 </script>
 <style>

@@ -10,7 +10,7 @@ export default {
       default: "#ccc",
     },
   },
-};
+}
 </script>
 <style lang="scss">
 .zm-test {
