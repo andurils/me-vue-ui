@@ -1,0 +1,13 @@
+- components.json
+
+"build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-chalk/gulpfile.js && cp-cli packages/theme-chalk/lib lib/theme-chalk",
+
+升级 gulp 4
+
+安装 gulp 命令行工具 npm install --global gulp-cli
+
+开发时依赖项 npm install gulp -D
+
+检查 gulp 版本 gulp --version
+
+文件复制 npm install cp-cli -D

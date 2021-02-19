@@ -5,10 +5,10 @@
  * Licensed under the MIT license.
  */
 
-"use strict";
+'use strict';
 
 // cheerio实现了jQuery的一个子集 用在服务器端需要对DOM进行操作的地方
-var cheerio = require("cheerio");
+var cheerio = require('cheerio');
 
 // 移除标签
 exports.strip = function(str, tags) {
