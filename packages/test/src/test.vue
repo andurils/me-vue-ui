@@ -3,14 +3,14 @@
 </template>
 <script>
 export default {
-  name: "ZmTest",
+  name: 'ZmTest',
   props: {
     bgColor: {
       type: String,
-      default: "#ccc",
+      default: '#ccc',
     },
   },
-}
+};
 </script>
 <style lang="scss">
 .zm-test {

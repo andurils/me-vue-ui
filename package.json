@@ -19,6 +19,8 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
+    "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -40,7 +42,9 @@
     "markdown-it-container": "^3.0.0",
     "node-sass": "^4.12.0",
     "prettier": "^1.19.1",
+    "resize-observer-polyfill": "^1.5.1",
     "sass-loader": "^8.0.2",
+    "throttle-debounce": "^3.0.1",
     "transliteration": "^2.2.0",
     "vue-markdown-loader": "^2.4.1",
     "vue-template-compiler": "^2.6.11"

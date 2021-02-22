@@ -1,17 +1,14 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    HelloWorldHelloWorldHelloWorld
-    <zm-test bgColor="blue"></zm-test>
-  </div>
-</template>
 <script>
-// @ is an alias to /examples
-// import HelloWorld from "@/components/HelloWorld.vue";
 export default {
-  name: 'home',
-  components: {
-    // HelloWorld,
+  name: 'Landing',
+
+  mounted() {
+    const i = 0;
+    console.log(i);
+  },
+
+  render() {
+    return <h1>Hello From Landing!!!</h1>;
   },
 };
 </script>

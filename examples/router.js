@@ -1,9 +1,9 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import navConfig from "./configs/nav";
-import langs from "./configs/lang";
-import Home from "./views/Home";
-import locale from "./locale";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import navConfig from './configs/nav';
+import langs from './configs/lang';
+import Home from './views/Home';
+import locale from './locale';
 Vue.use(VueRouter);
 
 const routes = [];
@@ -15,11 +15,11 @@ langs.forEach(({ lang }) => {
     name: `${lang}-home`,
     component: Home,
     meta: {
-      title: "Muse-UI",
-      name: "home",
-      path: "/",
-      lang: lang
-    }
+      title: 'Muse-UI',
+      name: 'home',
+      path: '/',
+      lang: lang,
+    },
   });
 });
 
@@ -39,32 +39,32 @@ function registerRoute(navs, lang) {
           title: `Muse-UI ${nav.name}`,
           name: nav.name,
           path: nav.path,
-          lang: lang
-        }
+          lang: lang,
+        },
       });
     }
   });
 }
 
 routes.push({
-  path: "*",
-  redirect: "/" + locale
+  path: '*',
+  redirect: '/' + locale,
 });
 
 routes.push({
-  path: "/test",
-  name: "test",
-  component: () => import("./docs/test.md")
+  path: '/test',
+  name: 'test',
+  component: () => import('./docs/test.md'),
 });
 
 routes.push({
-  path: "/button",
-  name: "button",
-  component: () => import("./docs/button.md")
+  path: '/button',
+  name: 'button',
+  component: () => import('./docs/button.md'),
 });
 
 export default new VueRouter({
-  mode: "hash",
-  base: process.env.NODE_ENV !== "production" ? "/" : "/me-vue-ui",
-  routes
+  mode: 'hash',
+  base: process.env.NODE_ENV !== 'production' ? '/' : '/me-vue-ui',
+  routes,
 });

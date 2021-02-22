@@ -22,14 +22,14 @@ module.exports = {
     config.resolve.alias.set('@', path.resolve('examples')).set('~', path.resolve('packages'));
 
     // 修改 Loader 选项 使examples及packages目录下的js文件都加入编译
-    config.module
-      .rule('js')
-      .include.add('/packages')
-      .end()
-      .include.add('/examples')
-      .end()
-      .use('babel')
-      .loader('babel-loader');
+    // config.module
+    //   .rule('js')
+    //   .include.add('/packages')
+    //   .end()
+    //   .include.add('/examples')
+    //   .end()
+    //   .use('babel')
+    //   .loader('babel-loader');
 
     // 使用vue-markdown-loader
     config.module

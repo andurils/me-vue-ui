@@ -12,17 +12,11 @@
 
 <el-button type="info" disabled>信息按钮</el-button> <el-button type="warning" disabled>警告按钮</el-button> <el-button type="danger" disabled>危险按钮</el-button>
 
-:::tip ### 描述标题 tiptip
-
-xxxxxxxxxxx
-
-:::
-
-:::warning ### 描述标题 warningwarning
+:::demo ### 描述标题
 
 ```html
 <template>
-  <zm-test bgColor="red"></zm-test>
+  <img src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
 </template>
 <script>
   console.log(1);
@@ -35,10 +29,27 @@ xxxxxxxxxxx
 
 ```html
 <template>
-  <img src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
+  <el-input-number
+    v-model="num"
+    @change="handleChange"
+    :min="1"
+    :max="10"
+    label="描述文字"
+  ></el-input-number>
 </template>
 <script>
-  console.log(1);
+  export default {
+    data() {
+      return {
+        num: 1,
+      };
+    },
+    methods: {
+      handleChange(value) {
+        console.log(value);
+      },
+    },
+  };
 </script>
 ```
 
