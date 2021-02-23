@@ -1,7 +1,8 @@
-import Popper from 'element-ui/src/utils/vue-popper';
-import debounce from 'throttle-debounce/debounce';
-import { addClass, removeClass, on, off } from 'element-ui/src/utils/dom';
-import { generateId } from 'element-ui/src/utils/util';
+/* eslint-disable no-unused-vars */
+import Popper from '../../utils/vue-popper';
+import { debounce } from 'throttle-debounce';
+import { addClass, removeClass, on, off } from '../../utils/dom';
+import { generateId } from '../../utils/util';
 import Vue from 'vue';
 
 export default {
@@ -12,54 +13,54 @@ export default {
   props: {
     openDelay: {
       type: Number,
-      default: 0
+      default: 0,
     },
     disabled: Boolean,
     manual: Boolean,
     effect: {
       type: String,
-      default: 'dark'
+      default: 'dark',
     },
     arrowOffset: {
       type: Number,
-      default: 0
+      default: 0,
     },
     popperClass: String,
     content: String,
     visibleArrow: {
-      default: true
+      default: true,
     },
     transition: {
       type: String,
-      default: 'el-fade-in-linear'
+      default: 'el-fade-in-linear',
     },
     popperOptions: {
       default() {
         return {
           boundariesPadding: 10,
-          gpuAcceleration: false
+          gpuAcceleration: false,
         };
-      }
+      },
     },
     enterable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     hideAfter: {
       type: Number,
-      default: 0
+      default: 0,
     },
     tabindex: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
 
   data() {
     return {
       tooltipId: `el-tooltip-${generateId()}`,
       timeoutPending: null,
-      focusing: false
+      focusing: false,
     };
   },
   beforeCreate() {
@@ -69,7 +70,7 @@ export default {
       data: { node: '' },
       render(h) {
         return this.node;
-      }
+      },
     }).$mount();
 
     this.debounceClose = debounce(200, () => this.handleClosePopper());
@@ -78,29 +79,32 @@ export default {
   render(h) {
     if (this.popperVM) {
       this.popperVM.node = (
-        <transition
-          name={ this.transition }
-          onAfterLeave={ this.doDestroy }>
+        <transition name={this.transition} onAfterLeave={this.doDestroy}>
           <div
-            onMouseleave={ () => { this.setExpectedState(false); this.debounceClose(); } }
-            onMouseenter= { () => { this.setExpectedState(true); } }
+            onMouseleave={() => {
+              this.setExpectedState(false);
+              this.debounceClose();
+            }}
+            onMouseenter={() => {
+              this.setExpectedState(true);
+            }}
             ref="popper"
             role="tooltip"
             id={this.tooltipId}
-            aria-hidden={ (this.disabled || !this.showPopper) ? 'true' : 'false' }
+            aria-hidden={this.disabled || !this.showPopper ? 'true' : 'false'}
             v-show={!this.disabled && this.showPopper}
-            class={
-              ['el-tooltip__popper', 'is-' + this.effect, this.popperClass]
-            }>
-            { this.$slots.content || this.content }
+            class={['el-tooltip__popper', 'is-' + this.effect, this.popperClass]}
+          >
+            {this.$slots.content || this.content}
           </div>
-        </transition>);
+        </transition>
+      );
     }
 
     const firstElement = this.getFirstElement();
     if (!firstElement) return null;
 
-    const data = firstElement.data = firstElement.data || {};
+    const data = (firstElement.data = firstElement.data || {});
     data.staticClass = this.addTooltipClass(data.staticClass);
 
     return firstElement;
@@ -144,7 +148,7 @@ export default {
       } else {
         removeClass(this.referenceElm, 'focusing');
       }
-    }
+    },
   },
   methods: {
     show() {
@@ -191,7 +195,7 @@ export default {
     },
 
     handleClosePopper() {
-      if (this.enterable && this.expectedState || this.manual) return;
+      if ((this.enterable && this.expectedState) || this.manual) return;
       clearTimeout(this.timeout);
 
       if (this.timeoutPending) {
@@ -218,10 +222,10 @@ export default {
       for (let index = 0; index < slots.length; index++) {
         if (slots[index] && slots[index].tag) {
           element = slots[index];
-        };
+        }
       }
       return element;
-    }
+    },
   },
 
   beforeDestroy() {
@@ -237,5 +241,5 @@ export default {
       off(reference, 'blur', this.handleBlur);
       off(reference, 'click', this.removeFocusing);
     }
-  }
+  },
 };

@@ -39,7 +39,7 @@ export default function upload(option) {
   if (xhr.upload) {
     xhr.upload.onprogress = function progress(e) {
       if (e.total > 0) {
-        e.percent = e.loaded / e.total * 100;
+        e.percent = (e.loaded / e.total) * 100;
       }
       option.onProgress(e);
     };
@@ -76,6 +76,7 @@ export default function upload(option) {
   const headers = option.headers || {};
 
   for (let item in headers) {
+    // eslint-disable-next-line no-prototype-builtins
     if (headers.hasOwnProperty(item) && headers[item] !== null) {
       xhr.setRequestHeader(item, headers[item]);
     }

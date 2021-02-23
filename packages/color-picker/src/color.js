@@ -1,9 +1,6 @@
+/* eslint-disable no-prototype-builtins */
 const hsv2hsl = function(hue, sat, val) {
-  return [
-    hue,
-    (sat * val / ((hue = (2 - sat) * val) < 1 ? hue : 2 - hue)) || 0,
-    hue / 2
-  ];
+  return [hue, (sat * val) / ((hue = (2 - sat) * val) < 1 ? hue : 2 - hue) || 0, hue / 2];
 };
 
 // Need to handle 1.0 as 100%, since once it is a number, there is no difference between it and 1
@@ -29,7 +26,7 @@ const bound01 = function(value, max) {
   }
 
   // Handle floating point rounding errors
-  if ((Math.abs(value - max) < 0.000001)) {
+  if (Math.abs(value - max) < 0.000001) {
     return 1;
   }
 
@@ -56,7 +53,10 @@ const HEX_INT_MAP = { A: 10, B: 11, C: 12, D: 13, E: 14, F: 15 };
 
 const parseHexChannel = function(hex) {
   if (hex.length === 2) {
-    return (HEX_INT_MAP[hex[0].toUpperCase()] || +hex[0]) * 16 + (HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1]);
+    return (
+      (HEX_INT_MAP[hex[0].toUpperCase()] || +hex[0]) * 16 +
+      (HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1])
+    );
   }
 
   return HEX_INT_MAP[hex[1].toUpperCase()] || +hex[1];
@@ -71,7 +71,7 @@ const hsl2hsv = function(hue, sat, light) {
   let v;
 
   light *= 2;
-  sat *= (light <= 1) ? light : 2 - light;
+  sat *= light <= 1 ? light : 2 - light;
   smin *= lmin <= 1 ? lmin : 2 - lmin;
   v = (light + sat) / 2;
   sv = light === 0 ? (2 * smin) / (lmin + smin) : (2 * sat) / (light + sat);
@@ -79,7 +79,7 @@ const hsl2hsv = function(hue, sat, light) {
   return {
     h: hue,
     s: sv * 100,
-    v: v * 100
+    v: v * 100,
   };
 };
 
@@ -142,7 +142,7 @@ const hsv2rgb = function(h, s, v) {
   return {
     r: Math.round(r * 255),
     g: Math.round(g * 255),
-    b: Math.round(b * 255)
+    b: Math.round(b * 255),
   };
 };
 
@@ -160,6 +160,7 @@ export default class Color {
     options = options || {};
 
     for (let option in options) {
+      // eslint-disable-next-line no-prototype-builtins
       if (options.hasOwnProperty(option)) {
         this[option] = options[option];
       }
@@ -210,8 +211,11 @@ export default class Color {
     };
 
     if (value.indexOf('hsl') !== -1) {
-      const parts = value.replace(/hsla|hsl|\(|\)/gm, '')
-        .split(/\s|,/g).filter((val) => val !== '').map((val, index) => index > 2 ? parseFloat(val) : parseInt(val, 10));
+      const parts = value
+        .replace(/hsla|hsl|\(|\)/gm, '')
+        .split(/\s|,/g)
+        .filter(val => val !== '')
+        .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)));
 
       if (parts.length === 4) {
         this._alpha = Math.floor(parseFloat(parts[3]) * 100);
@@ -223,8 +227,11 @@ export default class Color {
         fromHSV(h, s, v);
       }
     } else if (value.indexOf('hsv') !== -1) {
-      const parts = value.replace(/hsva|hsv|\(|\)/gm, '')
-        .split(/\s|,/g).filter((val) => val !== '').map((val, index) => index > 2 ? parseFloat(val) : parseInt(val, 10));
+      const parts = value
+        .replace(/hsva|hsv|\(|\)/gm, '')
+        .split(/\s|,/g)
+        .filter(val => val !== '')
+        .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)));
 
       if (parts.length === 4) {
         this._alpha = Math.floor(parseFloat(parts[3]) * 100);
@@ -235,8 +242,11 @@ export default class Color {
         fromHSV(parts[0], parts[1], parts[2]);
       }
     } else if (value.indexOf('rgb') !== -1) {
-      const parts = value.replace(/rgba|rgb|\(|\)/gm, '')
-        .split(/\s|,/g).filter((val) => val !== '').map((val, index) => index > 2 ? parseFloat(val) : parseInt(val, 10));
+      const parts = value
+        .replace(/rgba|rgb|\(|\)/gm, '')
+        .split(/\s|,/g)
+        .filter(val => val !== '')
+        .map((val, index) => (index > 2 ? parseFloat(val) : parseInt(val, 10)));
 
       if (parts.length === 4) {
         this._alpha = Math.floor(parseFloat(parts[3]) * 100);
@@ -263,7 +273,7 @@ export default class Color {
       }
 
       if (hex.length === 8) {
-        this._alpha = Math.floor(parseHexChannel(hex.substring(6)) / 255 * 100);
+        this._alpha = Math.floor((parseHexChannel(hex.substring(6)) / 255) * 100);
       } else if (hex.length === 3 || hex.length === 6) {
         this._alpha = 100;
       }
@@ -274,10 +284,12 @@ export default class Color {
   }
 
   compare(color) {
-    return Math.abs(color._hue - this._hue) < 2 &&
+    return (
+      Math.abs(color._hue - this._hue) < 2 &&
       Math.abs(color._saturation - this._saturation) < 1 &&
       Math.abs(color._value - this._value) < 1 &&
-      Math.abs(color._alpha - this._alpha) < 1;
+      Math.abs(color._alpha - this._alpha) < 1
+    );
   }
 
   doOnChange() {
@@ -286,26 +298,34 @@ export default class Color {
     if (this.enableAlpha) {
       switch (format) {
         case 'hsl':
+          // eslint-disable-next-line no-case-declarations
           const hsl = hsv2hsl(_hue, _saturation / 100, _value / 100);
-          this.value = `hsla(${ _hue }, ${ Math.round(hsl[1] * 100) }%, ${ Math.round(hsl[2] * 100) }%, ${ _alpha / 100})`;
+          this.value = `hsla(${_hue}, ${Math.round(hsl[1] * 100)}%, ${Math.round(
+            hsl[2] * 100,
+          )}%, ${_alpha / 100})`;
           break;
         case 'hsv':
-          this.value = `hsva(${ _hue }, ${ Math.round(_saturation) }%, ${ Math.round(_value) }%, ${ _alpha / 100})`;
+          this.value = `hsva(${_hue}, ${Math.round(_saturation)}%, ${Math.round(
+            _value,
+          )}%, ${_alpha / 100})`;
           break;
         default:
+          // eslint-disable-next-line no-case-declarations
           const { r, g, b } = hsv2rgb(_hue, _saturation, _value);
-          this.value = `rgba(${r}, ${g}, ${b}, ${ _alpha / 100 })`;
+          this.value = `rgba(${r}, ${g}, ${b}, ${_alpha / 100})`;
       }
     } else {
       switch (format) {
         case 'hsl':
+          // eslint-disable-next-line no-case-declarations
           const hsl = hsv2hsl(_hue, _saturation / 100, _value / 100);
-          this.value = `hsl(${ _hue }, ${ Math.round(hsl[1] * 100) }%, ${ Math.round(hsl[2] * 100) }%)`;
+          this.value = `hsl(${_hue}, ${Math.round(hsl[1] * 100)}%, ${Math.round(hsl[2] * 100)}%)`;
           break;
         case 'hsv':
-          this.value = `hsv(${ _hue }, ${ Math.round(_saturation) }%, ${ Math.round(_value) }%)`;
+          this.value = `hsv(${_hue}, ${Math.round(_saturation)}%, ${Math.round(_value)}%)`;
           break;
         case 'rgb':
+          // eslint-disable-next-line no-case-declarations
           const { r, g, b } = hsv2rgb(_hue, _saturation, _value);
           this.value = `rgb(${r}, ${g}, ${b})`;
           break;
@@ -314,4 +334,4 @@ export default class Color {
       }
     }
   }
-};
+}

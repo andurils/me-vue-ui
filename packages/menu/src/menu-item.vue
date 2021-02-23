@@ -34,7 +34,7 @@
 </template>
 <script>
 import Menu from './menu-mixin';
-import ElTooltip from 'element-ui/packages/tooltip';
+import ElTooltip from '../../tooltip';
 import Emitter from '../../mixins/emitter';
 
 export default {

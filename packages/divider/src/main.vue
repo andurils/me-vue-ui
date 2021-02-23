@@ -7,7 +7,7 @@
     <div
       v-if="slots().default && props.direction !== 'vertical'"
       :class="['el-divider__text', `is-${props.contentPosition}`]"
-     >
+    >
       <slot />
     </div>
   </div>
@@ -22,16 +22,15 @@ export default {
       default: 'horizontal',
       validator(val) {
         return ['horizontal', 'vertical'].indexOf(val) !== -1;
-      }
+      },
     },
     contentPosition: {
       type: String,
       default: 'center',
       validator(val) {
         return ['left', 'center', 'right'].indexOf(val) !== -1;
-      }
-    }
-  }
+      },
+    },
+  },
 };
-
 </script>

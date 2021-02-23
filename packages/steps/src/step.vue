@@ -6,23 +6,17 @@
       !isSimple && `is-${$parent.direction}`,
       isSimple && 'is-simple',
       isLast && !space && !isCenter && 'is-flex',
-      isCenter && !isVertical && !isSimple && 'is-center'
-     ]">
+      isCenter && !isVertical && !isSimple && 'is-center',
+    ]"
+  >
     <!-- icon & line -->
-    <div
-      class="el-step__head"
-      :class="`is-${currentStatus}`">
-      <div
-        class="el-step__line"
-        :style="isLast ? '' : { marginRight: $parent.stepOffset + 'px' }"
-      >
+    <div class="el-step__head" :class="`is-${currentStatus}`">
+      <div class="el-step__line" :style="isLast ? '' : { marginRight: $parent.stepOffset + 'px' }">
         <i class="el-step__line-inner" :style="lineStyle"></i>
       </div>
 
       <div class="el-step__icon" :class="`is-${icon ? 'icon' : 'text'}`">
-        <slot
-          v-if="currentStatus !== 'success' && currentStatus !== 'error'"
-          name="icon">
+        <slot v-if="currentStatus !== 'success' && currentStatus !== 'error'" name="icon">
           <i v-if="icon" class="el-step__icon-inner" :class="[icon]"></i>
           <div class="el-step__icon-inner" v-if="!icon && !isSimple">{{ index + 1 }}</div>
         </slot>
@@ -36,17 +30,11 @@
     </div>
     <!-- title & description -->
     <div class="el-step__main">
-      <div
-        class="el-step__title"
-        ref="title"
-        :class="['is-' + currentStatus]">
+      <div class="el-step__title" ref="title" :class="['is-' + currentStatus]">
         <slot name="title">{{ title }}</slot>
       </div>
       <div v-if="isSimple" class="el-step__arrow"></div>
-      <div
-        v-else
-        class="el-step__description"
-        :class="['is-' + currentStatus]">
+      <div v-else class="el-step__description" :class="['is-' + currentStatus]">
         <slot name="description">{{ description }}</slot>
       </div>
     </div>
@@ -61,14 +49,14 @@ export default {
     title: String,
     icon: String,
     description: String,
-    status: String
+    status: String,
   },
 
   data() {
     return {
       index: -1,
       lineStyle: {},
-      internalStatus: ''
+      internalStatus: '',
     };
   },
 
@@ -109,19 +97,23 @@ export default {
       return this.$parent.steps.length;
     },
     space() {
-      const { isSimple, $parent: { space } } = this;
-      return isSimple ? '' : space ;
+      const {
+        isSimple,
+        $parent: { space },
+      } = this;
+      return isSimple ? '' : space;
     },
     style: function() {
       const style = {};
       const parent = this.$parent;
       const len = parent.steps.length;
 
-      const space = (typeof this.space === 'number'
-        ? this.space + 'px'
-        : this.space
+      const space =
+        typeof this.space === 'number'
+          ? this.space + 'px'
+          : this.space
           ? this.space
-          : 100 / (len - (this.isCenter ? 0 : 1)) + '%');
+          : 100 / (len - (this.isCenter ? 0 : 1)) + '%';
       style.flexBasis = space;
       if (this.isVertical) return style;
       if (this.isLast) {
@@ -131,7 +123,7 @@ export default {
       }
 
       return style;
-    }
+    },
   },
 
   methods: {
@@ -158,27 +150,32 @@ export default {
         step = this.currentStatus !== 'error' ? 0 : 0;
       } else if (status === 'wait') {
         step = 0;
-        style.transitionDelay = (-150 * this.index) + 'ms';
+        style.transitionDelay = -150 * this.index + 'ms';
       }
 
       style.borderWidth = step && !this.isSimple ? '1px' : 0;
       this.$parent.direction === 'vertical'
-        ? style.height = step + '%'
-        : style.width = step + '%';
+        ? (style.height = step + '%')
+        : (style.width = step + '%');
 
       this.lineStyle = style;
-    }
+    },
   },
 
   mounted() {
+    // eslint-disable-next-line no-unused-vars
     const unwatch = this.$watch('index', val => {
       this.$watch('$parent.active', this.updateStatus, { immediate: true });
-      this.$watch('$parent.processStatus', () => {
-        const activeIndex = this.$parent.active;
-        this.updateStatus(activeIndex);
-      }, { immediate: true });
+      this.$watch(
+        '$parent.processStatus',
+        () => {
+          const activeIndex = this.$parent.active;
+          this.updateStatus(activeIndex);
+        },
+        { immediate: true },
+      );
       unwatch();
     });
-  }
+  },
 };
 </script>

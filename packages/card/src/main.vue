@@ -10,14 +10,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'ElCard',
-    props: {
-      header: {},
-      bodyStyle: {},
-      shadow: {
-        type: String
-      }
-    }
-  };
+export default {
+  name: 'ElCard',
+  props: {
+    header: {},
+    bodyStyle: {},
+    shadow: {
+      type: String,
+    },
+  },
+};
 </script>

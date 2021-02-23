@@ -1,4 +1,4 @@
-import { addClass, removeClass } from 'element-ui/src/utils/dom';
+import { addClass, removeClass } from '../utils/dom';
 
 class Transition {
   beforeEnter(el) {
@@ -69,9 +69,9 @@ export default {
   functional: true,
   render(h, { children }) {
     const data = {
-      on: new Transition()
+      on: new Transition(),
     };
 
     return h('transition', data, children);
-  }
+  },
 };

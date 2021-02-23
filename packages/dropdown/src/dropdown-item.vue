@@ -29,6 +29,7 @@ export default {
   },
 
   methods: {
+    // eslint-disable-next-line no-unused-vars
     handleClick(e) {
       this.dispatch('ElDropdown', 'menu-item-click', [this.command, this]);
     },

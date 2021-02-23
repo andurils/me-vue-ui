@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Watcher from './watcher';
-import { arrayFind } from 'element-ui/src/utils/util';
+import { arrayFind } from '../../../utils/util';
 
 Watcher.prototype.mutations = {
   setData(states, data) {
@@ -93,7 +93,7 @@ Watcher.prototype.mutations = {
       this.table.$emit('sort-change', {
         column,
         prop,
-        order
+        order,
       });
     }
 
@@ -128,7 +128,7 @@ Watcher.prototype.mutations = {
 
   setCurrentRow(states, row) {
     this.updateCurrentRow(row);
-  }
+  },
 };
 
 Watcher.prototype.commit = function(name, ...args) {

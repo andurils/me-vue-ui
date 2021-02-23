@@ -2,7 +2,7 @@
   <div
     class="el-upload-dragger"
     :class="{
-      'is-dragover': dragover
+      'is-dragover': dragover,
     }"
     @drop.prevent="onDrop"
     @dragover.prevent="onDragover"
@@ -12,42 +12,43 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'ElUploadDrag',
-    props: {
-      disabled: Boolean
+export default {
+  name: 'ElUploadDrag',
+  props: {
+    disabled: Boolean,
+  },
+  inject: {
+    uploader: {
+      default: '',
     },
-    inject: {
-      uploader: {
-        default: ''
+  },
+  data() {
+    return {
+      dragover: false,
+    };
+  },
+  methods: {
+    onDragover() {
+      if (!this.disabled) {
+        this.dragover = true;
       }
     },
-    data() {
-      return {
-        dragover: false
-      };
-    },
-    methods: {
-      onDragover() {
-        if (!this.disabled) {
-          this.dragover = true;
-        }
-      },
-      onDrop(e) {
-        if (this.disabled || !this.uploader) return;
-        const accept = this.uploader.accept;
-        this.dragover = false;
-        if (!accept) {
-          this.$emit('file', e.dataTransfer.files);
-          return;
-        }
-        this.$emit('file', [].slice.call(e.dataTransfer.files).filter(file => {
+    onDrop(e) {
+      if (this.disabled || !this.uploader) return;
+      const accept = this.uploader.accept;
+      this.dragover = false;
+      if (!accept) {
+        this.$emit('file', e.dataTransfer.files);
+        return;
+      }
+      this.$emit(
+        'file',
+        [].slice.call(e.dataTransfer.files).filter(file => {
           const { type, name } = file;
-          const extension = name.indexOf('.') > -1
-            ? `.${ name.split('.').pop() }`
-            : '';
+          const extension = name.indexOf('.') > -1 ? `.${name.split('.').pop()}` : '';
           const baseType = type.replace(/\/.*$/, '');
-          return accept.split(',')
+          return accept
+            .split(',')
             .map(type => type.trim())
             .filter(type => type)
             .some(acceptedType => {
@@ -57,14 +58,15 @@
               if (/\/\*$/.test(acceptedType)) {
                 return baseType === acceptedType.replace(/\/\*$/, '');
               }
+              // eslint-disable-next-line no-useless-escape
               if (/^[^\/]+\/[^\/]+$/.test(acceptedType)) {
                 return type === acceptedType;
               }
               return false;
             });
-        }));
-      }
-    }
-  };
+        }),
+      );
+    },
+  },
+};
 </script>
-

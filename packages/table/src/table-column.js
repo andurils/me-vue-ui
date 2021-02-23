@@ -1,6 +1,6 @@
 import { cellStarts, cellForced, defaultRenderCell, treeCellPrefix } from './config';
 import { mergeOptions, parseWidth, parseMinWidth, compose } from './util';
-import ElCheckbox from 'element-ui/packages/checkbox';
+import ElCheckbox from '../../checkbox';
 
 let columnIdSeed = 1;
 
@@ -10,7 +10,7 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'default'
+      default: 'default',
     },
     label: String,
     className: String,
@@ -22,13 +22,13 @@ export default {
     renderHeader: Function,
     sortable: {
       type: [Boolean, String],
-      default: false
+      default: false,
     },
     sortMethod: Function,
     sortBy: [String, Function, Array],
     resizable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     columnKey: String,
     align: String,
@@ -45,7 +45,7 @@ export default {
     filterPlacement: String,
     filterMultiple: {
       type: Boolean,
-      default: true
+      default: true,
     },
     index: [Number, Function],
     sortOrders: {
@@ -55,14 +55,14 @@ export default {
       },
       validator(val) {
         return val.every(order => ['ascending', 'descending', null].indexOf(order) > -1);
-      }
-    }
+      },
+    },
   },
 
   data() {
     return {
       isSubColumn: false,
-      columns: []
+      columns: [],
     };
   },
 
@@ -97,14 +97,14 @@ export default {
 
     realHeaderAlign() {
       return this.headerAlign ? 'is-' + this.headerAlign : this.realAlign;
-    }
+    },
   },
 
   methods: {
     getPropsData(...props) {
       return props.reduce((prev, cur) => {
         if (Array.isArray(cur)) {
-          cur.forEach((key) => {
+          cur.forEach(key => {
             prev[key] = this[key];
           });
         }
@@ -146,7 +146,9 @@ export default {
     setColumnRenders(column) {
       // renderHeader 属性不推荐使用。
       if (this.renderHeader) {
-        console.warn('[Element Warn][TableColumn]Comparing to render-header, scoped-slot header is easier to use. We recommend users to use scoped-slot header.');
+        console.warn(
+          '[Element Warn][TableColumn]Comparing to render-header, scoped-slot header is easier to use. We recommend users to use scoped-slot header.',
+        );
       } else if (column.type !== 'selection') {
         column.renderHeader = (h, scope) => {
           const renderHeader = this.$scopedSlots.header;
@@ -158,13 +160,9 @@ export default {
       // TODO: 这里的实现调整
       if (column.type === 'expand') {
         // 对于展开行，renderCell 不允许配置的。在上一步中已经设置过，这里需要简单封装一下。
-        column.renderCell = (h, data) => (<div class="cell">
-          { originRenderCell(h, data) }
-        </div>);
+        column.renderCell = (h, data) => <div class="cell">{originRenderCell(h, data)}</div>;
         this.owner.renderExpanded = (h, data) => {
-          return this.$scopedSlots.default
-            ? this.$scopedSlots.default(data)
-            : this.$slots.default;
+          return this.$scopedSlots.default ? this.$scopedSlots.default(data) : this.$slots.default;
         };
       } else {
         originRenderCell = originRenderCell || defaultRenderCell;
@@ -179,29 +177,42 @@ export default {
           const prefix = treeCellPrefix(h, data);
           const props = {
             class: 'cell',
-            style: {}
+            style: {},
           };
           if (column.showOverflowTooltip) {
             props.class += ' el-tooltip';
-            props.style = {width: (data.column.realWidth || data.column.width) - 1 + 'px'};
+            props.style = { width: (data.column.realWidth || data.column.width) - 1 + 'px' };
           }
-          return (<div { ...props }>
-            { prefix }
-            { children }
-          </div>);
+          return (
+            <div {...props}>
+              {prefix}
+              {children}
+            </div>
+          );
         };
       }
       return column;
     },
 
     registerNormalWatchers() {
-      const props = ['label', 'property', 'filters', 'filterMultiple', 'sortable', 'index', 'formatter', 'className', 'labelClassName', 'showOverflowTooltip'];
+      const props = [
+        'label',
+        'property',
+        'filters',
+        'filterMultiple',
+        'sortable',
+        'index',
+        'formatter',
+        'className',
+        'labelClassName',
+        'showOverflowTooltip',
+      ];
       // 一些属性具有别名
       const aliases = {
         prop: 'property',
         realAlign: 'align',
         realHeaderAlign: 'headerAlign',
-        realWidth: 'width'
+        realWidth: 'width',
       };
       const allAliases = props.reduce((prev, cur) => {
         prev[cur] = cur;
@@ -211,7 +222,7 @@ export default {
       Object.keys(allAliases).forEach(key => {
         const columnKey = aliases[key];
 
-        this.$watch(key, (newVal) => {
+        this.$watch(key, newVal => {
           this.columnConfig[columnKey] = newVal;
         });
       });
@@ -221,7 +232,7 @@ export default {
       const props = ['fixed'];
       const aliases = {
         realWidth: 'width',
-        realMinWidth: 'minWidth'
+        realMinWidth: 'minWidth',
       };
       const allAliases = props.reduce((prev, cur) => {
         prev[cur] = cur;
@@ -231,17 +242,17 @@ export default {
       Object.keys(allAliases).forEach(key => {
         const columnKey = aliases[key];
 
-        this.$watch(key, (newVal) => {
+        this.$watch(key, newVal => {
           this.columnConfig[columnKey] = newVal;
           const updateColumns = columnKey === 'fixed';
           this.owner.store.scheduleLayout(updateColumns);
         });
       });
-    }
+    },
   },
 
   components: {
-    ElCheckbox
+    ElCheckbox,
   },
 
   beforeCreate() {
@@ -275,13 +286,30 @@ export default {
       // sort 相关属性
       sortable: sortable,
       // index 列
-      index: this.index
+      index: this.index,
     };
 
-    const basicProps = ['columnKey', 'label', 'className', 'labelClassName', 'type', 'renderHeader', 'formatter', 'fixed', 'resizable'];
+    const basicProps = [
+      'columnKey',
+      'label',
+      'className',
+      'labelClassName',
+      'type',
+      'renderHeader',
+      'formatter',
+      'fixed',
+      'resizable',
+    ];
     const sortProps = ['sortMethod', 'sortBy', 'sortOrders'];
     const selectProps = ['selectable', 'reserveSelection'];
-    const filterProps = ['filterMethod', 'filters', 'filterMultiple', 'filterOpened', 'filteredValue', 'filterPlacement'];
+    const filterProps = [
+      'filterMethod',
+      'filters',
+      'filterMultiple',
+      'filterOpened',
+      'filteredValue',
+      'filterPlacement',
+    ];
 
     let column = this.getPropsData(basicProps, sortProps, selectProps, filterProps);
     column = mergeOptions(defaults, column);
@@ -303,17 +331,26 @@ export default {
     const children = this.isSubColumn ? parent.$el.children : parent.$refs.hiddenColumns.children;
     const columnIndex = this.getColumnElIndex(children, this.$el);
 
-    owner.store.commit('insertColumn', this.columnConfig, columnIndex, this.isSubColumn ? parent.columnConfig : null);
+    owner.store.commit(
+      'insertColumn',
+      this.columnConfig,
+      columnIndex,
+      this.isSubColumn ? parent.columnConfig : null,
+    );
   },
 
   destroyed() {
     if (!this.$parent) return;
     const parent = this.$parent;
-    this.owner.store.commit('removeColumn', this.columnConfig, this.isSubColumn ? parent.columnConfig : null);
+    this.owner.store.commit(
+      'removeColumn',
+      this.columnConfig,
+      this.isSubColumn ? parent.columnConfig : null,
+    );
   },
 
   render(h) {
     // slots 也要渲染，需要计算合并表头
     return h('div', this.$slots.default);
-  }
+  },
 };

@@ -53,8 +53,8 @@
 <script>
 import AsyncValidator from 'async-validator';
 import emitter from '../../mixins/emitter';
-import objectAssign from 'element-ui/src/utils/merge';
-import { noop, getPropByPath } from 'element-ui/src/utils/util';
+import objectAssign from '../../utils/merge';
+import { noop, getPropByPath } from '../../utils/util';
 import LabelWrap from './label-wrap';
 export default {
   name: 'ElFormItem',
@@ -144,6 +144,7 @@ export default {
       let parentName = parent.$options.componentName;
       while (parentName !== 'ElForm') {
         if (parentName === 'ElFormItem') {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.isNested = true;
         }
         parent = parent.$parent;

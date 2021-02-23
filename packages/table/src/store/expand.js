@@ -5,8 +5,8 @@ export default {
     return {
       states: {
         defaultExpandAll: false,
-        expandRows: []
-      }
+        expandRows: [],
+      },
     };
   },
 
@@ -60,6 +60,6 @@ export default {
         return !!expandMap[getRowIdentity(row, rowKey)];
       }
       return expandRows.indexOf(row) !== -1;
-    }
-  }
+    },
+  },
 };

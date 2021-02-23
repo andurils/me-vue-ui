@@ -35,9 +35,9 @@
 import TreeStore from './model/tree-store';
 import { getNodeKey, findNearestComponent } from './model/util';
 import ElTreeNode from './tree-node.vue';
-import { t } from 'element-ui/src/locale';
+import { t } from '../../locale';
 import emitter from '../../mixins/emitter';
-import { addClass, removeClass } from 'element-ui/src/utils/dom';
+import { addClass, removeClass } from '../../utils/dom';
 
 export default {
   name: 'ElTree',
@@ -359,11 +359,13 @@ export default {
         // setData is required for draggable to work in FireFox
         // the content has to be '' so dragging a node out of the tree won't open a new tab in FireFox
         event.dataTransfer.setData('text/plain', '');
+        // eslint-disable-next-line no-empty
       } catch (e) {}
       dragState.draggingNode = treeNode;
       this.$emit('node-drag-start', treeNode.node, event);
     });
 
+    // eslint-disable-next-line no-unused-vars
     this.$on('tree-node-drag-over', (event, treeNode) => {
       const dropNode = findNearestComponent(event.target, 'ElTreeNode');
       const oldDropNode = dragState.dropNode;

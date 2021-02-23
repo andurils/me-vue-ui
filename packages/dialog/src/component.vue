@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import Popup from 'element-ui/src/utils/popup';
-import Migrating from 'element-ui/src/mixins/migrating';
+import Popup from '../../utils/popup';
+import Migrating from '../../mixins/migrating';
 import emitter from '../../mixins/emitter';
 
 export default {

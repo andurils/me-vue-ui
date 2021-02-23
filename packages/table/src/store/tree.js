@@ -13,8 +13,8 @@ export default {
         lazy: false,
         lazyTreeNodeMap: {},
         lazyColumnIdentifier: 'hasChildren',
-        childrenColumnName: 'children'
-      }
+        childrenColumnName: 'children',
+      },
     };
   },
 
@@ -48,22 +48,17 @@ export default {
         }
       });
       return res;
-    }
+    },
   },
 
   watch: {
     normalizedData: 'updateTreeData',
-    normalizedLazyNode: 'updateTreeData'
+    normalizedLazyNode: 'updateTreeData',
   },
 
   methods: {
     normalize(data) {
-      const {
-        childrenColumnName,
-        lazyColumnIdentifier,
-        rowKey,
-        lazy
-      } = this.states;
+      const { childrenColumnName, lazyColumnIdentifier, rowKey, lazy } = this.states;
       const res = {};
       walkTreeNode(
         data,
@@ -72,19 +67,19 @@ export default {
           if (Array.isArray(children)) {
             res[parentId] = {
               children: children.map(row => getRowIdentity(row, rowKey)),
-              level
+              level,
             };
           } else if (lazy) {
             // 当 children 不存在且 lazy 为 true，该节点即为懒加载的节点
             res[parentId] = {
               children: [],
               lazy: true,
-              level
+              level,
             };
           }
         },
         childrenColumnName,
-        lazyColumnIdentifier
+        lazyColumnIdentifier,
       );
       return res;
     },
@@ -95,17 +90,10 @@ export default {
       const keys = Object.keys(nested);
       const newTreeData = {};
       if (keys.length) {
-        const {
-          treeData: oldTreeData,
-          defaultExpandAll,
-          expandRowKeys,
-          lazy
-        } = this.states;
+        const { treeData: oldTreeData, defaultExpandAll, expandRowKeys, lazy } = this.states;
         const rootLazyRowKeys = [];
         const getExpanded = (oldValue, key) => {
-          const included =
-            defaultExpandAll ||
-            (expandRowKeys && expandRowKeys.indexOf(key) !== -1);
+          const included = defaultExpandAll || (expandRowKeys && expandRowKeys.indexOf(key) !== -1);
           return !!((oldValue && oldValue.expanded) || included);
         };
         // 合并 expanded 与 display，确保数据刷新后，状态不变
@@ -141,7 +129,7 @@ export default {
                 loading: !!loading,
                 expanded: getExpanded(oldValue, key),
                 children: lazyNodeChildren,
-                level: ''
+                level: '',
               };
             }
           });
@@ -162,7 +150,7 @@ export default {
       const { rowKey, treeData } = this.states;
       const id = getRowIdentity(row, rowKey);
       const data = id && treeData[id];
-      if (id && data && ('expanded' in data)) {
+      if (id && data && 'expanded' in data) {
         const oldExpanded = data.expanded;
         expanded = typeof expanded === 'undefined' ? !data.expanded : expanded;
         treeData[id].expanded = expanded;
@@ -203,6 +191,6 @@ export default {
           this.table.$emit('expand-change', row, true);
         });
       }
-    }
-  }
+    },
+  },
 };

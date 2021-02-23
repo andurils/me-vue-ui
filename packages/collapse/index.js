@@ -6,4 +6,3 @@ ElCollapse.install = function(Vue) {
 };
 
 export default ElCollapse;
-

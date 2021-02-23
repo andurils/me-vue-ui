@@ -40,8 +40,8 @@
 </template>
 <script>
 import emitter from '../../mixins/emitter';
-import Focus from 'element-ui/src/mixins/focus';
-import Migrating from 'element-ui/src/mixins/migrating';
+import Focus from '../../mixins/focus';
+import Migrating from '../../mixins/migrating';
 
 export default {
   name: 'ElSwitch',
@@ -130,6 +130,7 @@ export default {
     },
   },
   methods: {
+    // eslint-disable-next-line no-unused-vars
     handleChange(event) {
       const val = this.checked ? this.inactiveValue : this.activeValue;
       this.$emit('input', val);

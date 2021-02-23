@@ -1,9 +1,8 @@
 <script>
-
 export default {
   props: {
     isAutoWidth: Boolean,
-    updateAll: Boolean
+    updateAll: Boolean,
   },
 
   inject: ['elForm', 'elFormItem'],
@@ -20,9 +19,11 @@ export default {
           style.marginLeft = marginLeft + 'px';
         }
       }
-      return (<div class="el-form-item__label-wrap" style={style}>
-        { slots }
-      </div>);
+      return (
+        <div class="el-form-item__label-wrap" style={style}>
+          {slots}
+        </div>
+      );
     } else {
       return slots[0];
     }
@@ -45,7 +46,7 @@ export default {
           this.elForm.deregisterLabelWidth(this.computedWidth);
         }
       }
-    }
+    },
   },
 
   watch: {
@@ -54,12 +55,12 @@ export default {
         this.elForm.registerLabelWidth(val, oldVal);
         this.elFormItem.updateComputedLabelWidth(val);
       }
-    }
+    },
   },
 
   data() {
     return {
-      computedWidth: 0
+      computedWidth: 0,
     };
   },
 
@@ -73,6 +74,6 @@ export default {
 
   beforeDestroy() {
     this.updateLabelWidth('remove');
-  }
+  },
 };
 </script>

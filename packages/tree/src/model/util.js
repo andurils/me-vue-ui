@@ -6,7 +6,7 @@ export const markNodeData = function(node, data) {
     value: node.id,
     enumerable: false,
     configurable: false,
-    writable: false
+    writable: false,
   });
 };
 

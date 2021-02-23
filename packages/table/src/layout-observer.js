@@ -17,7 +17,7 @@ export default {
         throw new Error('Can not find table layout.');
       }
       return layout;
-    }
+    },
   },
 
   mounted() {
@@ -38,7 +38,7 @@ export default {
       if (!cols.length) return;
       const flattenColumns = layout.getFlattenColumns();
       const columnsMap = {};
-      flattenColumns.forEach((column) => {
+      flattenColumns.forEach(column => {
         columnsMap[column.id] = column;
       });
       for (let i = 0, j = cols.length; i < j; i++) {
@@ -63,6 +63,6 @@ export default {
         th.style.width = layout.scrollY ? layout.gutterWidth + 'px' : '0';
         th.style.display = layout.scrollY ? '' : 'none';
       }
-    }
-  }
+    },
+  },
 };

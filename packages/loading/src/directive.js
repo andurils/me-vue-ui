@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Loading from './loading.vue';
-import { addClass, removeClass, getStyle } from 'element-ui/src/utils/dom';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import afterLeave from 'element-ui/src/utils/after-leave';
+import { addClass, removeClass, getStyle } from '../../utils/dom';
+import { PopupManager } from '../../utils/popup';
+import afterLeave from '../../utils/after-leave';
 const Mask = Vue.extend(Loading);
 
 const loadingDirective = {};
@@ -26,10 +26,11 @@ loadingDirective.install = Vue => {
 
             ['top', 'left'].forEach(property => {
               const scroll = property === 'top' ? 'scrollTop' : 'scrollLeft';
-              el.maskStyle[property] = el.getBoundingClientRect()[property] +
+              el.maskStyle[property] =
+                el.getBoundingClientRect()[property] +
                 document.body[scroll] +
                 document.documentElement[scroll] -
-                parseInt(getStyle(document.body, `margin-${ property }`), 10) +
+                parseInt(getStyle(document.body, `margin-${property}`), 10) +
                 'px';
             });
             ['height', 'width'].forEach(property => {
@@ -44,22 +45,31 @@ loadingDirective.install = Vue => {
         }
       });
     } else {
-      afterLeave(el.instance, _ => {
-        if (!el.instance.hiding) return;
-        el.domVisible = false;
-        const target = binding.modifiers.fullscreen || binding.modifiers.body
-          ? document.body
-          : el;
-        removeClass(target, 'el-loading-parent--relative');
-        removeClass(target, 'el-loading-parent--hidden');
-        el.instance.hiding = false;
-      }, 300, true);
+      afterLeave(
+        el.instance,
+        // eslint-disable-next-line no-unused-vars
+        _ => {
+          if (!el.instance.hiding) return;
+          el.domVisible = false;
+          const target =
+            binding.modifiers.fullscreen || binding.modifiers.body ? document.body : el;
+          removeClass(target, 'el-loading-parent--relative');
+          removeClass(target, 'el-loading-parent--hidden');
+          el.instance.hiding = false;
+        },
+        300,
+        true,
+      );
       el.instance.visible = false;
       el.instance.hiding = true;
     }
   };
   const insertDom = (parent, el, binding) => {
-    if (!el.domVisible && getStyle(el, 'display') !== 'none' && getStyle(el, 'visibility') !== 'hidden') {
+    if (
+      !el.domVisible &&
+      getStyle(el, 'display') !== 'none' &&
+      getStyle(el, 'visibility') !== 'hidden'
+    ) {
       Object.keys(el.maskStyle).forEach(property => {
         el.mask.style[property] = el.maskStyle[property];
       });
@@ -97,12 +107,12 @@ loadingDirective.install = Vue => {
       const mask = new Mask({
         el: document.createElement('div'),
         data: {
-          text: vm && vm[textExr] || textExr,
-          spinner: vm && vm[spinnerExr] || spinnerExr,
-          background: vm && vm[backgroundExr] || backgroundExr,
-          customClass: vm && vm[customClassExr] || customClassExr,
-          fullscreen: !!binding.modifiers.fullscreen
-        }
+          text: (vm && vm[textExr]) || textExr,
+          spinner: (vm && vm[spinnerExr]) || spinnerExr,
+          background: (vm && vm[backgroundExr]) || backgroundExr,
+          customClass: (vm && vm[customClassExr]) || customClassExr,
+          fullscreen: !!binding.modifiers.fullscreen,
+        },
       });
       el.instance = mask;
       el.mask = mask.$el;
@@ -120,13 +130,11 @@ loadingDirective.install = Vue => {
 
     unbind: function(el, binding) {
       if (el.domInserted) {
-        el.mask &&
-        el.mask.parentNode &&
-        el.mask.parentNode.removeChild(el.mask);
+        el.mask && el.mask.parentNode && el.mask.parentNode.removeChild(el.mask);
         toggleLoading(el, { value: false, modifiers: binding.modifiers });
       }
       el.instance && el.instance.$destroy();
-    }
+    },
   });
 };
 

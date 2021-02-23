@@ -4,10 +4,11 @@
       v-if="visible"
       @click.stop="handleClick"
       :style="{
-        'right': styleRight,
-        'bottom': styleBottom
+        right: styleRight,
+        bottom: styleBottom,
       }"
-      class="el-backtop">
+      class="el-backtop"
+    >
       <slot>
         <el-icon name="caret-top"></el-icon>
       </slot>
@@ -16,12 +17,11 @@
 </template>
 
 <script>
-import throttle from 'throttle-debounce/throttle';
+import { throttle } from 'throttle-debounce';
 
 const cubic = value => Math.pow(value, 3);
-const easeInOutCubic = value => value < 0.5
-  ? cubic(value * 2) / 2
-  : 1 - cubic((1 - value) * 2) / 2;
+const easeInOutCubic = value =>
+  value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
 
 export default {
   name: 'ElBacktop',
@@ -29,24 +29,24 @@ export default {
   props: {
     visibilityHeight: {
       type: Number,
-      default: 200
+      default: 200,
     },
     target: [String],
     right: {
       type: Number,
-      default: 40
+      default: 40,
     },
     bottom: {
       type: Number,
-      default: 40
-    }
+      default: 40,
+    },
   },
 
   data() {
     return {
       el: null,
       container: null,
-      visible: false
+      visible: false,
     };
   },
 
@@ -56,7 +56,7 @@ export default {
     },
     styleRight() {
       return `${this.right}px`;
-    }
+    },
   },
 
   mounted() {
@@ -100,11 +100,11 @@ export default {
         }
       };
       rAF(frameFunc);
-    }
+    },
   },
 
   beforeDestroy() {
     this.container.removeEventListener('scroll', this.throttledScrollHandler);
-  }
+  },
 };
 </script>

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { t } from 'element-ui/src/locale';
+import { t } from '../../locale';
 export default {
   name: 'ElPageHeader',
 
@@ -22,9 +22,9 @@ export default {
       type: String,
       default() {
         return t('el.pageHeader.title');
-      }
+      },
     },
-    content: String
-  }
+    content: String,
+  },
 };
 </script>

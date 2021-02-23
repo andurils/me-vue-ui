@@ -1,10 +1,10 @@
 <script>
-import Clickoutside from 'element-ui/src/utils/clickoutside';
+import Clickoutside from '../../utils/clickoutside';
 import Emitter from '../../mixins/emitter';
-import Migrating from 'element-ui/src/mixins/migrating';
-import ElButton from 'element-ui/packages/button';
-import ElButtonGroup from 'element-ui/packages/button-group';
-import { generateId } from 'element-ui/src/utils/util';
+import Migrating from '../../mixins/migrating';
+import ElButton from '../../button';
+import ElButtonGroup from '../../button-group';
+import { generateId } from '../../utils/util';
 
 export default {
   name: 'ElDropdown',
@@ -276,6 +276,7 @@ export default {
     },
   },
 
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     let { hide, splitButton, type, dropdownSize } = this;
 

@@ -1,6 +1,13 @@
 import Vue from 'vue';
-import merge from 'element-ui/src/utils/merge';
-import { getKeysMap, getRowIdentity, getColumnById, getColumnByKey, orderBy, toggleRowStatus } from '../util';
+import merge from '../../../utils/merge';
+import {
+  getKeysMap,
+  getRowIdentity,
+  getColumnById,
+  getColumnByKey,
+  orderBy,
+  toggleRowStatus,
+} from '../util';
 import expand from './expand';
 import current from './current';
 import tree from './tree';
@@ -10,12 +17,18 @@ const sortData = (data, states) => {
   if (!sortingColumn || typeof sortingColumn.sortable === 'string') {
     return data;
   }
-  return orderBy(data, states.sortProp, states.sortOrder, sortingColumn.sortMethod, sortingColumn.sortBy);
+  return orderBy(
+    data,
+    states.sortProp,
+    states.sortOrder,
+    sortingColumn.sortMethod,
+    sortingColumn.sortBy,
+  );
 };
 
-const doFlattenColumns = (columns) => {
+const doFlattenColumns = columns => {
   const result = [];
-  columns.forEach((column) => {
+  columns.forEach(column => {
     if (column.children) {
       result.push.apply(result, doFlattenColumns(column.children));
     } else {
@@ -67,8 +80,8 @@ export default Vue.extend({
         sortProp: null,
         sortOrder: null,
 
-        hoverRow: null
-      }
+        hoverRow: null,
+      },
     };
   },
 
@@ -85,16 +98,26 @@ export default Vue.extend({
     updateColumns() {
       const states = this.states;
       const _columns = states._columns || [];
-      states.fixedColumns = _columns.filter((column) => column.fixed === true || column.fixed === 'left');
-      states.rightFixedColumns = _columns.filter((column) => column.fixed === 'right');
+      states.fixedColumns = _columns.filter(
+        column => column.fixed === true || column.fixed === 'left',
+      );
+      states.rightFixedColumns = _columns.filter(column => column.fixed === 'right');
 
-      if (states.fixedColumns.length > 0 && _columns[0] && _columns[0].type === 'selection' && !_columns[0].fixed) {
+      if (
+        states.fixedColumns.length > 0 &&
+        _columns[0] &&
+        _columns[0].type === 'selection' &&
+        !_columns[0].fixed
+      ) {
         _columns[0].fixed = true;
         states.fixedColumns.unshift(_columns[0]);
       }
 
       const notFixedColumns = _columns.filter(column => !column.fixed);
-      states.originColumns = [].concat(states.fixedColumns).concat(notFixedColumns).concat(states.rightFixedColumns);
+      states.originColumns = []
+        .concat(states.fixedColumns)
+        .concat(notFixedColumns)
+        .concat(states.rightFixedColumns);
 
       const leafColumns = doFlattenColumns(notFixedColumns);
       const fixedLeafColumns = doFlattenColumns(states.fixedColumns);
@@ -104,7 +127,10 @@ export default Vue.extend({
       states.fixedLeafColumnsLength = fixedLeafColumns.length;
       states.rightFixedLeafColumnsLength = rightFixedLeafColumns.length;
 
-      states.columns = [].concat(fixedLeafColumns).concat(leafColumns).concat(rightFixedLeafColumns);
+      states.columns = []
+        .concat(fixedLeafColumns)
+        .concat(leafColumns)
+        .concat(rightFixedLeafColumns);
       states.isComplex = states.fixedColumns.length > 0 || states.rightFixedColumns.length > 0;
     },
 
@@ -141,6 +167,7 @@ export default Vue.extend({
         const selectedMap = getKeysMap(selection, rowKey);
         const dataMap = getKeysMap(data, rowKey);
         for (let key in selectedMap) {
+          // eslint-disable-next-line no-prototype-builtins
           if (selectedMap.hasOwnProperty(key) && !dataMap[key]) {
             deleted.push(selectedMap[key].row);
           }
@@ -278,12 +305,12 @@ export default Vue.extend({
       const { _data, filters } = states;
       let data = _data;
 
-      Object.keys(filters).forEach((columnId) => {
+      Object.keys(filters).forEach(columnId => {
         const values = states.filters[columnId];
         if (!values || values.length === 0) return;
         const column = getColumnById(this.states, columnId);
         if (column && column.filterMethod) {
-          data = data.filter((row) => {
+          data = data.filter(row => {
             return values.some(value => column.filterMethod.call(null, value, row, column));
           });
         }
@@ -334,7 +361,7 @@ export default Vue.extend({
           column: columns,
           values: [],
           silent: true,
-          multi: true
+          multi: true,
         });
       } else {
         keys.forEach(key => {
@@ -346,7 +373,7 @@ export default Vue.extend({
         this.commit('filterChange', {
           column: {},
           values: [],
-          silent: true
+          silent: true,
         });
       }
     },
@@ -357,7 +384,7 @@ export default Vue.extend({
 
       this.updateSort(null, null, null);
       this.commit('changeSortCondition', {
-        silent: true
+        silent: true,
       });
     },
 
@@ -376,6 +403,6 @@ export default Vue.extend({
       } else {
         this.toggleTreeExpansion(row, expanded);
       }
-    }
-  }
+    },
+  },
 });

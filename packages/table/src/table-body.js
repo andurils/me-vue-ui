@@ -1,9 +1,9 @@
-import { arrayFindIndex } from 'element-ui/src/utils/util';
+import { arrayFindIndex } from '../../utils/util';
 import { getCell, getColumnByCell, getRowIdentity } from './util';
-import { getStyle, hasClass, removeClass, addClass } from 'element-ui/src/utils/dom';
-import ElCheckbox from 'element-ui/packages/checkbox';
-import ElTooltip from 'element-ui/packages/tooltip';
-import debounce from 'throttle-debounce/debounce';
+import { getStyle, hasClass, removeClass, addClass } from '../../utils/dom';
+import ElCheckbox from '../../checkbox';
+import ElTooltip from '../../tooltip';
+import { debounce } from 'throttle-debounce';
 import LayoutObserver from './layout-observer';
 import { mapStates } from './store/helper';
 
@@ -14,41 +14,41 @@ export default {
 
   components: {
     ElCheckbox,
-    ElTooltip
+    ElTooltip,
   },
 
   props: {
     store: {
-      required: true
+      required: true,
     },
     stripe: Boolean,
     context: {},
     rowClassName: [String, Function],
     rowStyle: [Object, Function],
     fixed: String,
-    highlight: Boolean
+    highlight: Boolean,
   },
 
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     const data = this.data || [];
     return (
-      <table
-        class="el-table__body"
-        cellspacing="0"
-        cellpadding="0"
-        border="0">
+      <table class="el-table__body" cellspacing="0" cellpadding="0" border="0">
         <colgroup>
-          {
-            this.columns.map(column => <col name={ column.id } key={column.id} />)
-          }
+          {this.columns.map(column => (
+            <col name={column.id} key={column.id} />
+          ))}
         </colgroup>
         <tbody>
-          {
-            data.reduce((acc, row) => {
-              return acc.concat(this.wrappedRowRender(row, acc.length));
-            }, [])
-          }
-          <el-tooltip effect={ this.table.tooltipEffect } placement="top" ref="tooltip" content={ this.tooltipContent }></el-tooltip>
+          {data.reduce((acc, row) => {
+            return acc.concat(this.wrappedRowRender(row, acc.length));
+          }, [])}
+          <el-tooltip
+            effect={this.table.tooltipEffect}
+            placement="top"
+            ref="tooltip"
+            content={this.tooltipContent}
+          ></el-tooltip>
         </tbody>
       </table>
     );
@@ -68,12 +68,12 @@ export default {
       columnsCount: states => states.columns.length,
       leftFixedCount: states => states.fixedColumns.length,
       rightFixedCount: states => states.rightFixedColumns.length,
-      hasExpandColumn: states => states.columns.some(({ type }) => type === 'expand')
+      hasExpandColumn: states => states.columns.some(({ type }) => type === 'expand'),
     }),
 
     firstDefaultColumnIndex() {
       return arrayFindIndex(this.columns, ({ type }) => type === 'default');
-    }
+    },
   },
 
   watch: {
@@ -83,7 +83,7 @@ export default {
       if (!this.store.states.isComplex || this.$isServer) return;
       let raf = window.requestAnimationFrame;
       if (!raf) {
-        raf = (fn) => setTimeout(fn, 16);
+        raf = fn => setTimeout(fn, 16);
       }
       raf(() => {
         const rows = this.$el.querySelectorAll('.el-table__row');
@@ -96,12 +96,12 @@ export default {
           addClass(newRow, 'hover-row');
         }
       });
-    }
+    },
   },
 
   data() {
     return {
-      tooltipContent: ''
+      tooltipContent: '',
     };
   },
 
@@ -124,7 +124,9 @@ export default {
       } else if (this.fixed === 'right') {
         return index < this.columnsCount - this.rightFixedLeafCount;
       } else {
-        return (index < this.leftFixedLeafCount) || (index >= this.columnsCount - this.rightFixedLeafCount);
+        return (
+          index < this.leftFixedLeafCount || index >= this.columnsCount - this.rightFixedLeafCount
+        );
       }
     },
 
@@ -137,7 +139,7 @@ export default {
           row,
           column,
           rowIndex,
-          columnIndex
+          columnIndex,
         });
         if (Array.isArray(result)) {
           rowspan = result[0];
@@ -155,7 +157,7 @@ export default {
       if (typeof rowStyle === 'function') {
         return rowStyle.call(null, {
           row,
-          rowIndex
+          rowIndex,
         });
       }
       return rowStyle || null;
@@ -174,10 +176,12 @@ export default {
       if (typeof rowClassName === 'string') {
         classes.push(rowClassName);
       } else if (typeof rowClassName === 'function') {
-        classes.push(rowClassName.call(null, {
-          row,
-          rowIndex
-        }));
+        classes.push(
+          rowClassName.call(null, {
+            row,
+            rowIndex,
+          }),
+        );
       }
 
       if (this.store.states.expandRows.indexOf(row) > -1) {
@@ -194,7 +198,7 @@ export default {
           rowIndex,
           columnIndex,
           row,
-          column
+          column,
         });
       }
       return cellStyle;
@@ -211,12 +215,14 @@ export default {
       if (typeof cellClassName === 'string') {
         classes.push(cellClassName);
       } else if (typeof cellClassName === 'function') {
-        classes.push(cellClassName.call(null, {
-          rowIndex,
-          columnIndex,
-          row,
-          column
-        }));
+        classes.push(
+          cellClassName.call(null, {
+            rowIndex,
+            columnIndex,
+            row,
+            column,
+          }),
+        );
       }
 
       return classes.join(' ');
@@ -236,7 +242,7 @@ export default {
 
       if (cell) {
         const column = getColumnByCell(table, cell);
-        const hoverState = table.hoverState = {cell, column, row};
+        const hoverState = (table.hoverState = { cell, column, row });
         table.$emit('cell-mouse-enter', hoverState.row, hoverState.column, hoverState.cell, event);
       }
 
@@ -251,9 +257,14 @@ export default {
       range.setStart(cellChild, 0);
       range.setEnd(cellChild, cellChild.childNodes.length);
       const rangeWidth = range.getBoundingClientRect().width;
-      const padding = (parseInt(getStyle(cellChild, 'paddingLeft'), 10) || 0) +
+      const padding =
+        (parseInt(getStyle(cellChild, 'paddingLeft'), 10) || 0) +
         (parseInt(getStyle(cellChild, 'paddingRight'), 10) || 0);
-      if ((rangeWidth + padding > cellChild.offsetWidth || cellChild.scrollWidth > cellChild.offsetWidth) && this.$refs.tooltip) {
+      if (
+        (rangeWidth + padding > cellChild.offsetWidth ||
+          cellChild.scrollWidth > cellChild.offsetWidth) &&
+        this.$refs.tooltip
+      ) {
         const tooltip = this.$refs.tooltip;
         // TODO 会引起整个 Table 的重新渲染，需要优化
         this.tooltipContent = cell.innerText || cell.textContent;
@@ -275,7 +286,13 @@ export default {
       if (!cell) return;
 
       const oldHoverState = this.table.hoverState || {};
-      this.table.$emit('cell-mouse-leave', oldHoverState.row, oldHoverState.column, oldHoverState.cell, event);
+      this.table.$emit(
+        'cell-mouse-leave',
+        oldHoverState.row,
+        oldHoverState.column,
+        oldHoverState.cell,
+        event,
+      );
     },
 
     handleMouseEnter: debounce(30, function(index) {
@@ -323,20 +340,24 @@ export default {
       }
       // 指令 v-show 会覆盖 row-style 中 display
       // 使用 :style 代替 v-show https://github.com/ElemeFE/element/issues/16995
-      let displayStyle = display ? null : {
-        display: 'none'
-      };
-      return (<tr
-        style={ [displayStyle, this.getRowStyle(row, $index)] }
-        class={ rowClasses }
-        key={ this.getKeyOfRow(row, $index) }
-        on-dblclick={ ($event) => this.handleDoubleClick($event, row) }
-        on-click={ ($event) => this.handleClick($event, row) }
-        on-contextmenu={ ($event) => this.handleContextMenu($event, row) }
-        on-mouseenter={ _ => this.handleMouseEnter($index) }
-        on-mouseleave={ this.handleMouseLeave }>
-        {
-          columns.map((column, cellIndex) => {
+      let displayStyle = display
+        ? null
+        : {
+            display: 'none',
+          };
+      return (
+        <tr
+          style={[displayStyle, this.getRowStyle(row, $index)]}
+          class={rowClasses}
+          key={this.getKeyOfRow(row, $index)}
+          on-dblclick={$event => this.handleDoubleClick($event, row)}
+          on-click={$event => this.handleClick($event, row)}
+          on-contextmenu={$event => this.handleContextMenu($event, row)}
+          // eslint-disable-next-line no-unused-vars
+          on-mouseenter={_ => this.handleMouseEnter($index)}
+          on-mouseleave={this.handleMouseLeave}
+        >
+          {columns.map((column, cellIndex) => {
             const { rowspan, colspan } = this.getSpan(row, column, $index, cellIndex);
             if (!rowspan || !colspan) {
               return null;
@@ -348,12 +369,12 @@ export default {
               _self: this.context || this.table.$vnode.context,
               column: columnData,
               row,
-              $index
+              $index,
             };
             if (cellIndex === firstDefaultColumnIndex && treeRowData) {
               data.treeNode = {
                 indent: treeRowData.level * treeIndent,
-                level: treeRowData.level
+                level: treeRowData.level,
               };
               if (typeof treeRowData.expanded === 'boolean') {
                 data.treeNode.expanded = treeRowData.expanded;
@@ -368,25 +389,24 @@ export default {
             }
             return (
               <td
-                style={ this.getCellStyle($index, cellIndex, row, column) }
-                class={ this.getCellClass($index, cellIndex, row, column) }
-                rowspan={ rowspan }
-                colspan={ colspan }
-                on-mouseenter={ ($event) => this.handleCellMouseEnter($event, row) }
-                on-mouseleave={ this.handleCellMouseLeave }>
-                {
-                  column.renderCell.call(
-                    this._renderProxy,
-                    this.$createElement,
-                    data,
-                    columnsHidden[cellIndex]
-                  )
-                }
+                style={this.getCellStyle($index, cellIndex, row, column)}
+                class={this.getCellClass($index, cellIndex, row, column)}
+                rowspan={rowspan}
+                colspan={colspan}
+                on-mouseenter={$event => this.handleCellMouseEnter($event, row)}
+                on-mouseleave={this.handleCellMouseLeave}
+              >
+                {column.renderCell.call(
+                  this._renderProxy,
+                  this.$createElement,
+                  data,
+                  columnsHidden[cellIndex],
+                )}
               </td>
             );
-          })
-        }
-      </tr>);
+          })}
+        </tr>
+      );
     },
 
     wrappedRowRender(row, $index) {
@@ -401,13 +421,16 @@ export default {
           return tr;
         }
         // 使用二维数组，避免修改 $index
-        return [[
-          tr,
-          <tr key={'expanded-row__' + tr.key}>
-            <td colspan={ this.columnsCount } class="el-table__expanded-cell">
-              { renderExpanded(this.$createElement, { row, $index, store: this.store }) }
-            </td>
-          </tr>]];
+        return [
+          [
+            tr,
+            <tr key={'expanded-row__' + tr.key}>
+              <td colspan={this.columnsCount} class="el-table__expanded-cell">
+                {renderExpanded(this.$createElement, { row, $index, store: this.store })}
+              </td>
+            </tr>,
+          ],
+        ];
       } else if (Object.keys(treeData).length) {
         assertRowKey();
         // TreeTable 时，rowKey 必须由用户设定，不使用 getKeyOfRow 计算
@@ -419,7 +442,7 @@ export default {
           treeRowData = {
             expanded: cur.expanded,
             level: cur.level,
-            display: true
+            display: true,
           };
           if (typeof cur.lazy === 'boolean') {
             if (typeof cur.loaded === 'boolean' && cur.loaded) {
@@ -439,7 +462,7 @@ export default {
               // 父节点的 display 状态影响子节点的显示状态
               const innerTreeRowData = {
                 display: parent.display && parent.expanded,
-                level: parent.level + 1
+                level: parent.level + 1,
               };
               const childKey = getRowIdentity(node, rowKey);
               if (childKey === undefined || childKey === null) {
@@ -478,6 +501,6 @@ export default {
       } else {
         return this.rowRender(row, $index);
       }
-    }
-  }
+    },
+  },
 };

@@ -4,45 +4,29 @@
       <div class="el-calendar__title">
         {{ i18nDate }}
       </div>
-      <div
-        class="el-calendar__button-group"
-        v-if="validatedRange.length === 0">
+      <div class="el-calendar__button-group" v-if="validatedRange.length === 0">
         <el-button-group>
-          <el-button
-            type="plain"
-            size="mini"
-            @click="selectDate('prev-month')">
+          <el-button type="plain" size="mini" @click="selectDate('prev-month')">
             {{ t('el.datepicker.prevMonth') }}
           </el-button>
-          <el-button
-            type="plain"
-            size="mini"
-            @click="selectDate('today')">
+          <el-button type="plain" size="mini" @click="selectDate('today')">
             {{ t('el.datepicker.today') }}
           </el-button>
-          <el-button
-            type="plain"
-            size="mini"
-            @click="selectDate('next-month')">
+          <el-button type="plain" size="mini" @click="selectDate('next-month')">
             {{ t('el.datepicker.nextMonth') }}
           </el-button>
         </el-button-group>
       </div>
     </div>
-    <div
-      class="el-calendar__body"
-      v-if="validatedRange.length === 0"
-      key="no-range">
+    <div class="el-calendar__body" v-if="validatedRange.length === 0" key="no-range">
       <date-table
         :date="date"
         :selected-day="realSelectedDay"
         :first-day-of-week="realFirstDayOfWeek"
-        @pick="pickDay" />
+        @pick="pickDay"
+      />
     </div>
-    <div
-      v-else
-      class="el-calendar__body"
-      key="has-range">
+    <div v-else class="el-calendar__body" key="has-range">
       <date-table
         v-for="(range, index) in validatedRange"
         :key="index"
@@ -51,18 +35,19 @@
         :range="range"
         :hide-header="index !== 0"
         :first-day-of-week="realFirstDayOfWeek"
-        @pick="pickDay" />
+        @pick="pickDay"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import Locale from 'element-ui/src/mixins/locale';
-import fecha from 'element-ui/src/utils/date';
-import ElButton from 'element-ui/packages/button';
-import ElButtonGroup from 'element-ui/packages/button-group';
+import Locale from '../../mixins/locale';
+import fecha from '../../utils/date';
+import ElButton from '../../button';
+import ElButtonGroup from '../../button-group';
 import DateTable from './date-table';
-import { validateRangeInOneMonth } from 'element-ui/src/utils/date-util';
+import { validateRangeInOneMonth } from '../../utils/date-util';
 
 const validTypes = ['prev-month', 'today', 'next-month'];
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -76,7 +61,7 @@ export default {
   components: {
     DateTable,
     ElButton,
-    ElButtonGroup
+    ElButtonGroup,
   },
 
   props: {
@@ -85,24 +70,26 @@ export default {
       type: Array,
       validator(range) {
         if (Array.isArray(range)) {
-          return range.length === 2 && range.every(
-            item => typeof item === 'string' ||
-            typeof item === 'number' ||
-            item instanceof Date);
+          return (
+            range.length === 2 &&
+            range.every(
+              item => typeof item === 'string' || typeof item === 'number' || item instanceof Date,
+            )
+          );
         } else {
           return true;
         }
-      }
+      },
     },
     firstDayOfWeek: {
       type: Number,
-      default: 1
-    }
+      default: 1,
+    },
   },
 
   provide() {
     return {
-      elCalendar: this
+      elCalendar: this,
     };
   },
 
@@ -137,14 +124,14 @@ export default {
 
     rangeValidator(date, isStart) {
       const firstDayOfWeek = this.realFirstDayOfWeek;
-      const expected = isStart ? firstDayOfWeek : (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1);
+      const expected = isStart ? firstDayOfWeek : firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
       const message = `${isStart ? 'start' : 'end'} of range should be ${weekDays[expected]}.`;
       if (date.getDay() !== expected) {
         console.warn('[ElementCalendar]', message, 'Invalid range will be ignored.');
         return false;
       }
       return true;
-    }
+    },
   },
 
   computed: {
@@ -186,7 +173,7 @@ export default {
         this.selectedDay = val;
         const date = new Date(val);
         this.$emit('input', date);
-      }
+      },
     },
 
     date() {
@@ -222,22 +209,19 @@ export default {
         }
         // start time and end time in one month
         if (validateRangeInOneMonth(start, end)) {
-          return [
-            [start, end]
-          ];
+          return [[start, end]];
         }
         const data = [];
         let startDay = new Date(start.getFullYear(), start.getMonth() + 1, 1);
         const lastDay = this.toDate(startDay.getTime() - oneDay);
         if (!validateRangeInOneMonth(startDay, end)) {
-          console.warn('[ElementCalendar]start time and end time interval must not exceed two months');
+          console.warn(
+            '[ElementCalendar]start time and end time interval must not exceed two months',
+          );
           return [];
         }
         // 第一个月的时间范围
-        data.push([
-          start,
-          lastDay
-        ]);
+        data.push([start, lastDay]);
         // 下一月的时间范围，需要计算一下该月的第一个周起始日
         const firstDayOfWeek = this.realFirstDayOfWeek;
         const nextMontFirstDay = startDay.getDay();
@@ -252,10 +236,7 @@ export default {
         }
         startDay = this.toDate(startDay.getTime() + interval * oneDay);
         if (startDay.getDate() < end.getDate()) {
-          data.push([
-            startDay,
-            end
-          ]);
+          data.push([startDay, end]);
         }
         return data;
       }
@@ -267,14 +248,14 @@ export default {
         return 0;
       }
       return Math.floor(this.firstDayOfWeek);
-    }
+    },
   },
 
   data() {
     return {
       selectedDay: '',
-      now: new Date()
+      now: new Date(),
     };
-  }
+  },
 };
 </script>

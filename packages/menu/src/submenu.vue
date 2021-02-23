@@ -1,8 +1,8 @@
 <script>
-import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition';
+import ElCollapseTransition from '../../transitions/collapse-transition';
 import menuMixin from './menu-mixin';
 import Emitter from '../../mixins/emitter';
-import Popper from 'element-ui/src/utils/vue-popper';
+import Popper from '../../utils/vue-popper';
 
 const poperMixins = {
   props: {
@@ -60,8 +60,10 @@ export default {
     };
   },
   watch: {
+    // eslint-disable-next-line no-unused-vars
     opened(val) {
       if (this.isMenuPopup) {
+        // eslint-disable-next-line no-unused-vars
         this.$nextTick(_ => {
           this.updatePopper();
         });
@@ -258,6 +260,7 @@ export default {
     this.parentMenu.removeSubmenu(this);
     this.rootMenu.removeSubmenu(this);
   },
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     const {
       active,

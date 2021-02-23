@@ -77,7 +77,7 @@
 </template>
 
 <script type="text/babel">
-import ElInputNumber from 'element-ui/packages/input-number';
+import ElInputNumber from '../../input-number';
 import SliderButton from './button.vue';
 import SliderMarker from './marker';
 import Emitter from '../../mixins/emitter';

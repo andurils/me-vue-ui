@@ -24,4 +24,4 @@ export default function(instance, callback, speed = 300, once = false) {
   setTimeout(() => {
     afterLeaveCallback();
   }, speed + 100);
-};
+}

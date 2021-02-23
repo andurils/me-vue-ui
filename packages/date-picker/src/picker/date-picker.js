@@ -20,9 +20,9 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'date'
+      default: 'date',
     },
-    timeArrowControl: Boolean
+    timeArrowControl: Boolean,
   },
 
   watch: {
@@ -34,10 +34,10 @@ export default {
       } else {
         this.panel = getPanel(type);
       }
-    }
+    },
   },
 
   created() {
     this.panel = getPanel(this.type);
-  }
+  },
 };

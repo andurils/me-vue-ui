@@ -6,4 +6,3 @@ Switch.install = function(Vue) {
 };
 
 export default Switch;
-

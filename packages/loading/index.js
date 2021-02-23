@@ -7,5 +7,5 @@ export default {
     Vue.prototype.$loading = service;
   },
   directive,
-  service
+  service,
 };

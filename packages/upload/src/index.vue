@@ -1,8 +1,8 @@
 <script>
 import UploadList from './upload-list';
 import Upload from './upload';
-import ElProgress from 'element-ui/packages/progress';
-import Migrating from 'element-ui/src/mixins/migrating';
+import ElProgress from '../../progress';
+import Migrating from '../../mixins/migrating';
 
 function noop() {}
 
@@ -14,96 +14,96 @@ export default {
   components: {
     ElProgress,
     UploadList,
-    Upload
+    Upload,
   },
 
   provide() {
     return {
-      uploader: this
+      uploader: this,
     };
   },
 
   inject: {
     elForm: {
-      default: ''
-    }
+      default: '',
+    },
   },
 
   props: {
     action: {
       type: String,
-      required: true
+      required: true,
     },
     headers: {
       type: Object,
       default() {
         return {};
-      }
+      },
     },
     data: Object,
     multiple: Boolean,
     name: {
       type: String,
-      default: 'file'
+      default: 'file',
     },
     drag: Boolean,
     dragger: Boolean,
     withCredentials: Boolean,
     showFileList: {
       type: Boolean,
-      default: true
+      default: true,
     },
     accept: String,
     type: {
       type: String,
-      default: 'select'
+      default: 'select',
     },
     beforeUpload: Function,
     beforeRemove: Function,
     onRemove: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onChange: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onPreview: {
-      type: Function
+      type: Function,
     },
     onSuccess: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onProgress: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onError: {
       type: Function,
-      default: noop
+      default: noop,
     },
     fileList: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     autoUpload: {
       type: Boolean,
-      default: true
+      default: true,
     },
     listType: {
       type: String,
-      default: 'text' // text,picture,picture-card
+      default: 'text', // text,picture,picture-card
     },
     httpRequest: Function,
     disabled: Boolean,
     limit: Number,
     onExceed: {
       type: Function,
-      default: noop
-    }
+      default: noop,
+    },
   },
 
   data() {
@@ -111,14 +111,14 @@ export default {
       uploadFiles: [],
       dragOver: false,
       draging: false,
-      tempIndex: 1
+      tempIndex: 1,
     };
   },
 
   computed: {
     uploadDisabled() {
       return this.disabled || (this.elForm || {}).disabled;
-    }
+    },
   },
 
   watch: {
@@ -140,12 +140,12 @@ export default {
       immediate: true,
       handler(fileList) {
         this.uploadFiles = fileList.map(item => {
-          item.uid = item.uid || (Date.now() + this.tempIndex++);
+          item.uid = item.uid || Date.now() + this.tempIndex++;
           item.status = item.status || 'success';
           return item;
         });
-      }
-    }
+      },
+    },
   },
 
   methods: {
@@ -157,7 +157,7 @@ export default {
         size: rawFile.size,
         percentage: 0,
         uid: rawFile.uid,
-        raw: rawFile
+        raw: rawFile,
       };
 
       if (this.listType === 'picture-card' || this.listType === 'picture') {
@@ -251,10 +251,11 @@ export default {
         props: {
           'default-file-list': 'default-file-list is renamed to file-list.',
           'show-upload-list': 'show-upload-list is renamed to show-file-list.',
-          'thumbnail-mode': 'thumbnail-mode has been deprecated, you can implement the same effect according to this case: http://element.eleme.io/#/zh-CN/component/upload#yong-hu-tou-xiang-shang-chuan'
-        }
+          'thumbnail-mode':
+            'thumbnail-mode has been deprecated, you can implement the same effect according to this case: http://element.eleme.io/#/zh-CN/component/upload#yong-hu-tou-xiang-shang-chuan',
+        },
       };
-    }
+    },
   },
 
   beforeDestroy() {
@@ -265,6 +266,7 @@ export default {
     });
   },
 
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     let uploadList;
 
@@ -275,16 +277,15 @@ export default {
           listType={this.listType}
           files={this.uploadFiles}
           on-remove={this.handleRemove}
-          handlePreview={this.onPreview}>
-          {
-            (props) => {
-              if (this.$scopedSlots.file) {
-                return this.$scopedSlots.file({
-                  file: props.file
-                });
-              }
+          handlePreview={this.onPreview}
+        >
+          {props => {
+            if (this.$scopedSlots.file) {
+              return this.$scopedSlots.file({
+                file: props.file,
+              });
             }
-          }
+          }}
         </UploadList>
       );
     }
@@ -313,9 +314,9 @@ export default {
         'on-error': this.handleError,
         'on-preview': this.onPreview,
         'on-remove': this.handleRemove,
-        'http-request': this.httpRequest
+        'http-request': this.httpRequest,
       },
-      ref: 'upload-inner'
+      ref: 'upload-inner',
     };
 
     const trigger = this.$slots.trigger || this.$slots.default;
@@ -323,16 +324,12 @@ export default {
 
     return (
       <div>
-        { this.listType === 'picture-card' ? uploadList : ''}
-        {
-          this.$slots.trigger
-            ? [uploadComponent, this.$slots.default]
-            : uploadComponent
-        }
+        {this.listType === 'picture-card' ? uploadList : ''}
+        {this.$slots.trigger ? [uploadComponent, this.$slots.default] : uploadComponent}
         {this.$slots.tip}
-        { this.listType !== 'picture-card' ? uploadList : ''}
+        {this.listType !== 'picture-card' ? uploadList : ''}
       </div>
     );
-  }
+  },
 };
 </script>

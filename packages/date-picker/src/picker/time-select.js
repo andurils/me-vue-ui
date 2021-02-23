@@ -11,11 +11,11 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'time-select'
-    }
+      default: 'time-select',
+    },
   },
 
   beforeCreate() {
     this.panel = Panel;
-  }
+  },
 };

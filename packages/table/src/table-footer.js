@@ -6,6 +6,7 @@ export default {
 
   mixins: [LayoutObserver],
 
+  // eslint-disable-next-line no-unused-vars
   render(h) {
     let sums = [];
     if (this.summaryMethod) {
@@ -43,37 +44,26 @@ export default {
     }
 
     return (
-      <table
-        class="el-table__footer"
-        cellspacing="0"
-        cellpadding="0"
-        border="0">
+      <table class="el-table__footer" cellspacing="0" cellpadding="0" border="0">
         <colgroup>
-          {
-            this.columns.map(column => <col name={ column.id } key={column.id} />)
-          }
-          {
-            this.hasGutter ? <col name="gutter" /> : ''
-          }
+          {this.columns.map(column => (
+            <col name={column.id} key={column.id} />
+          ))}
+          {this.hasGutter ? <col name="gutter" /> : ''}
         </colgroup>
-        <tbody class={ [{ 'has-gutter': this.hasGutter }] }>
+        <tbody class={[{ 'has-gutter': this.hasGutter }]}>
           <tr>
-            {
-              this.columns.map((column, cellIndex) => <td
+            {this.columns.map((column, cellIndex) => (
+              <td
                 key={cellIndex}
-                colspan={ column.colSpan }
-                rowspan={ column.rowSpan }
-                class={ this.getRowClasses(column, cellIndex) }>
-                <div class={ ['cell', column.labelClassName] }>
-                  {
-                    sums[cellIndex]
-                  }
-                </div>
-              </td>)
-            }
-            {
-              this.hasGutter ? <th class="gutter"></th> : ''
-            }
+                colspan={column.colSpan}
+                rowspan={column.rowSpan}
+                class={this.getRowClasses(column, cellIndex)}
+              >
+                <div class={['cell', column.labelClassName]}>{sums[cellIndex]}</div>
+              </td>
+            ))}
+            {this.hasGutter ? <th class="gutter"></th> : ''}
           </tr>
         </tbody>
       </table>
@@ -83,7 +73,7 @@ export default {
   props: {
     fixed: String,
     store: {
-      required: true
+      required: true,
     },
     summaryMethod: Function,
     sumText: String,
@@ -93,10 +83,10 @@ export default {
       default() {
         return {
           prop: '',
-          order: ''
+          order: '',
         };
-      }
-    }
+      },
+    },
   },
 
   computed: {
@@ -115,8 +105,8 @@ export default {
       rightFixedLeafCount: 'rightFixedLeafColumnsLength',
       columnsCount: states => states.columns.length,
       leftFixedCount: states => states.fixedColumns.length,
-      rightFixedCount: states => states.rightFixedColumns.length
-    })
+      rightFixedCount: states => states.rightFixedColumns.length,
+    }),
   },
 
   methods: {
@@ -129,10 +119,11 @@ export default {
           before += columns[i].colSpan;
         }
         return before < this.columnsCount - this.rightFixedLeafCount;
-      } else if (!this.fixed && column.fixed) { // hide cell when footer instance is not fixed and column is fixed
+      } else if (!this.fixed && column.fixed) {
+        // hide cell when footer instance is not fixed and column is fixed
         return true;
       } else {
-        return (index < this.leftFixedCount) || (index >= this.columnsCount - this.rightFixedCount);
+        return index < this.leftFixedCount || index >= this.columnsCount - this.rightFixedCount;
       }
     },
 
@@ -148,6 +139,6 @@ export default {
         classes.push('is-leaf');
       }
       return classes;
-    }
-  }
+    },
+  },
 };

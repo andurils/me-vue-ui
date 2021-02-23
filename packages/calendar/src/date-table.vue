@@ -1,6 +1,13 @@
 <script>
-import fecha from 'element-ui/src/utils/date';
-import { range as rangeArr, getFirstDayOfMonth, getPrevMonthLastDays, getMonthDays, getI18nSettings, validateRangeInOneMonth } from 'element-ui/src/utils/date-util';
+import fecha from '../../utils/date';
+import {
+  range as rangeArr,
+  getFirstDayOfMonth,
+  getPrevMonthLastDays,
+  getMonthDays,
+  getI18nSettings,
+  validateRangeInOneMonth,
+} from '../../utils/date-util';
 
 export default {
   props: {
@@ -11,18 +18,18 @@ export default {
         if (!(val && val.length)) return true;
         const [start, end] = val;
         return validateRangeInOneMonth(start, end);
-      }
+      },
     },
     date: Date,
     hideHeader: Boolean,
-    firstDayOfWeek: Number
+    firstDayOfWeek: Number,
   },
 
   inject: ['elCalendar'],
 
   data() {
     return {
-      WEEK_DAYS: getI18nSettings().dayNames
+      WEEK_DAYS: getI18nSettings().dayNames,
     };
   },
 
@@ -48,7 +55,7 @@ export default {
       return `${prefix}-${day}`;
     },
 
-    getCellClass({ text, type}) {
+    getCellClass({ text, type }) {
       const classes = [type];
       if (type === 'current') {
         const date = this.getFormateDate(text, type);
@@ -69,17 +76,17 @@ export default {
 
     cellRenderProxy({ text, type }) {
       let render = this.elCalendar.$scopedSlots.dateCell;
-      if (!render) return <span>{ text }</span>;
+      if (!render) return <span>{text}</span>;
 
       const day = this.getFormateDate(text, type);
       const date = new Date(day);
       const data = {
         isSelected: this.selectedDay === day,
         type: `${type}-month`,
-        day
+        day,
       };
       return render({ date, data });
-    }
+    },
   },
 
   computed: {
@@ -113,13 +120,13 @@ export default {
         const [start, end] = this.range;
         const currentMonthRange = rangeArr(end.getDate() - start.getDate() + 1).map((_, index) => ({
           text: start.getDate() + index,
-          type: 'current'
+          type: 'current',
         }));
         let remaining = currentMonthRange.length % 7;
         remaining = remaining === 0 ? 0 : 7 - remaining;
         const nextMonthRange = rangeArr(remaining).map((_, index) => ({
           text: index + 1,
-          type: 'next'
+          type: 'next',
         }));
         days = currentMonthRange.concat(nextMonthRange);
       } else {
@@ -129,16 +136,16 @@ export default {
         const firstDayOfWeek = typeof this.firstDayOfWeek === 'number' ? this.firstDayOfWeek : 1;
         const prevMonthDays = getPrevMonthLastDays(date, firstDay - firstDayOfWeek).map(day => ({
           text: day,
-          type: 'prev'
+          type: 'prev',
         }));
         const currentMonthDays = getMonthDays(date).map(day => ({
           text: day,
-          type: 'current'
+          type: 'current',
         }));
         days = [...prevMonthDays, ...currentMonthDays];
         const nextMonthDays = rangeArr(42 - days.length).map((_, index) => ({
           text: index + 1,
-          type: 'next'
+          type: 'next',
         }));
         days = days.concat(nextMonthDays);
       }
@@ -154,49 +161,50 @@ export default {
       } else {
         return WEEK_DAYS.slice(start).concat(WEEK_DAYS.slice(0, start));
       }
-    }
+    },
   },
 
   render() {
-    const thead = this.hideHeader ? null : (<thead>
-      {
-        this.weekDays.map(day => <th key={day}>{ day }</th>)
-      }
-    </thead>);
+    const thead = this.hideHeader ? null : (
+      <thead>
+        {this.weekDays.map(day => (
+          <th key={day}>{day}</th>
+        ))}
+      </thead>
+    );
     return (
       <table
         class={{
           'el-calendar-table': true,
-          'is-range': this.isInRange
+          'is-range': this.isInRange,
         }}
         cellspacing="0"
-        cellpadding="0">
-        {
-          thead
-        }
+        cellpadding="0"
+      >
+        {thead}
         <tbody>
-          {
-            this.rows.map((row, index) => <tr
+          {this.rows.map((row, index) => (
+            <tr
               class={{
                 'el-calendar-table__row': true,
-                'el-calendar-table__row--hide-border': index === 0 && this.hideHeader
+                'el-calendar-table__row--hide-border': index === 0 && this.hideHeader,
               }}
-              key={index}>
-              {
-                row.map((cell, key) => <td key={key}
-                  class={ this.getCellClass(cell) }
-                  onClick={this.pickDay.bind(this, cell)}>
-                  <div class="el-calendar-day">
-                    {
-                      this.cellRenderProxy(cell)
-                    }
-                  </div>
-                </td>)
-              }
-            </tr>)
-          }
+              key={index}
+            >
+              {row.map((cell, key) => (
+                <td
+                  key={key}
+                  class={this.getCellClass(cell)}
+                  onClick={this.pickDay.bind(this, cell)}
+                >
+                  <div class="el-calendar-day">{this.cellRenderProxy(cell)}</div>
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
-      </table>);
-  }
+      </table>
+    );
+  },
 };
 </script>

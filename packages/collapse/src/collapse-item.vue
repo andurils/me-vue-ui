@@ -42,9 +42,9 @@
   </div>
 </template>
 <script>
-import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition';
+import ElCollapseTransition from '../../transitions/collapse-transition';
 import Emitter from '../../mixins/emitter';
-import { generateId } from 'element-ui/src/utils/util';
+import { generateId } from '../../utils/util';
 
 export default {
   name: 'ElCollapseItem',

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import Popup from 'element-ui/src/utils/popup';
+import Popup from '../../utils/popup';
 import emitter from '../../mixins/emitter';
 
 export default {

@@ -1,6 +1,7 @@
 import normalizeWheel from 'normalize-wheel';
 
-const isFirefox = typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+const isFirefox =
+  typeof navigator !== 'undefined' && navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 const mousewheel = function(element, callback) {
   if (element && element.addEventListener) {
@@ -14,5 +15,5 @@ const mousewheel = function(element, callback) {
 export default {
   bind(el, binding) {
     mousewheel(el, binding.value);
-  }
+  },
 };

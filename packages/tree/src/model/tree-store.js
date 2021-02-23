@@ -7,6 +7,7 @@ export default class TreeStore {
     this.currentNodeKey = null;
 
     for (let option in options) {
+      // eslint-disable-next-line no-prototype-builtins
       if (options.hasOwnProperty(option)) {
         this[option] = options[option];
       }
@@ -16,12 +17,12 @@ export default class TreeStore {
 
     this.root = new Node({
       data: this.data,
-      store: this
+      store: this,
     });
 
     if (this.lazy && this.load) {
       const loadFn = this.load;
-      loadFn(this.root, (data) => {
+      loadFn(this.root, data => {
         this.root.doCreateChildren(data);
         this._initDefaultCheckedNodes();
       });
@@ -36,7 +37,7 @@ export default class TreeStore {
     const traverse = function(node) {
       const childNodes = node.root ? node.root.childNodes : node.childNodes;
 
-      childNodes.forEach((child) => {
+      childNodes.forEach(child => {
         child.visible = filterNodeMethod.call(child, value, child.data, child);
 
         traverse(child);
@@ -109,7 +110,7 @@ export default class TreeStore {
     const defaultCheckedKeys = this.defaultCheckedKeys || [];
     const nodesMap = this.nodesMap;
 
-    defaultCheckedKeys.forEach((checkedKey) => {
+    defaultCheckedKeys.forEach(checkedKey => {
       const node = nodesMap[checkedKey];
 
       if (node) {
@@ -157,8 +158,11 @@ export default class TreeStore {
     const traverse = function(node) {
       const childNodes = node.root ? node.root.childNodes : node.childNodes;
 
-      childNodes.forEach((child) => {
-        if ((child.checked || (includeHalfChecked && child.indeterminate)) && (!leafOnly || (leafOnly && child.isLeaf))) {
+      childNodes.forEach(child => {
+        if (
+          (child.checked || (includeHalfChecked && child.indeterminate)) &&
+          (!leafOnly || (leafOnly && child.isLeaf))
+        ) {
           checkedNodes.push(child.data);
         }
 
@@ -172,7 +176,7 @@ export default class TreeStore {
   }
 
   getCheckedKeys(leafOnly = false) {
-    return this.getCheckedNodes(leafOnly).map((data) => (data || {})[this.key]);
+    return this.getCheckedNodes(leafOnly).map(data => (data || {})[this.key]);
   }
 
   getHalfCheckedNodes() {
@@ -180,7 +184,7 @@ export default class TreeStore {
     const traverse = function(node) {
       const childNodes = node.root ? node.root.childNodes : node.childNodes;
 
-      childNodes.forEach((child) => {
+      childNodes.forEach(child => {
         if (child.indeterminate) {
           nodes.push(child.data);
         }
@@ -195,13 +199,14 @@ export default class TreeStore {
   }
 
   getHalfCheckedKeys() {
-    return this.getHalfCheckedNodes().map((data) => (data || {})[this.key]);
+    return this.getHalfCheckedNodes().map(data => (data || {})[this.key]);
   }
 
   _getAllNodes() {
     const allNodes = [];
     const nodesMap = this.nodesMap;
     for (let nodeKey in nodesMap) {
+      // eslint-disable-next-line no-prototype-builtins
       if (nodesMap.hasOwnProperty(nodeKey)) {
         allNodes.push(nodesMap[nodeKey]);
       }
@@ -256,7 +261,7 @@ export default class TreeStore {
         node.setChecked(false, false);
         const traverse = function(node) {
           const childNodes = node.childNodes;
-          childNodes.forEach((child) => {
+          childNodes.forEach(child => {
             if (!child.isLeaf) {
               child.setChecked(false, false);
             }
@@ -271,7 +276,7 @@ export default class TreeStore {
   setCheckedNodes(array, leafOnly = false) {
     const key = this.key;
     const checkedKeys = {};
-    array.forEach((item) => {
+    array.forEach(item => {
       checkedKeys[(item || {})[key]] = true;
     });
 
@@ -282,7 +287,7 @@ export default class TreeStore {
     this.defaultCheckedKeys = keys;
     const key = this.key;
     const checkedKeys = {};
-    keys.forEach((key) => {
+    keys.forEach(key => {
       checkedKeys[key] = true;
     });
 
@@ -293,7 +298,7 @@ export default class TreeStore {
     keys = keys || [];
     this.defaultExpandedKeys = keys;
 
-    keys.forEach((key) => {
+    keys.forEach(key => {
       const node = this.getNode(key);
       if (node) node.expand(null, this.autoExpandParent);
     });
@@ -337,4 +342,4 @@ export default class TreeStore {
       this.setCurrentNode(node);
     }
   }
-};
+}

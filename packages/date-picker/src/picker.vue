@@ -88,12 +88,12 @@
 
 <script>
 import Vue from 'vue';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
-import { formatDate, parseDate, isDateObject, getWeekNumber } from 'element-ui/src/utils/date-util';
-import Popper from 'element-ui/src/utils/vue-popper';
+import Clickoutside from '../../utils/clickoutside';
+import { formatDate, parseDate, isDateObject, getWeekNumber } from '../../utils/date-util';
+import Popper from '../../utils/vue-popper';
 import Emitter from '../../mixins/emitter';
-import ElInput from 'element-ui/packages/input';
-import merge from 'element-ui/src/utils/merge';
+import ElInput from '../../input';
+import merge from '../../utils/merge';
 
 const NewPopper = {
   props: {
@@ -678,6 +678,7 @@ export default {
       }
     },
 
+    // eslint-disable-next-line no-unused-vars
     handleStartChange(event) {
       const value = this.parseString(this.userInput && this.userInput[0]);
       if (value) {
@@ -691,6 +692,7 @@ export default {
       }
     },
 
+    // eslint-disable-next-line no-unused-vars
     handleEndChange(event) {
       const value = this.parseString(this.userInput && this.userInput[1]);
       if (value) {
@@ -868,6 +870,7 @@ export default {
 
         for (const option in options) {
           if (
+            // eslint-disable-next-line no-prototype-builtins
             options.hasOwnProperty(option) &&
             // 忽略 time-picker 的该配置项
             option !== 'selectableRange'

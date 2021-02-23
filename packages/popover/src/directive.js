@@ -16,5 +16,5 @@ export default {
   },
   inserted(el, binding, vnode) {
     getReference(el, binding, vnode);
-  }
+  },
 };

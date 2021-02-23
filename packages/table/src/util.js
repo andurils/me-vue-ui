@@ -1,4 +1,4 @@
-import { getValueByPath } from 'element-ui/src/utils/util';
+import { getValueByPath } from '../../utils/util';
 
 export const getCell = function(event) {
   let cell = event.target;
@@ -18,32 +18,34 @@ const isObject = function(obj) {
 };
 
 export const orderBy = function(array, sortKey, reverse, sortMethod, sortBy) {
-  if (!sortKey && !sortMethod && (!sortBy || Array.isArray(sortBy) && !sortBy.length)) {
+  if (!sortKey && !sortMethod && (!sortBy || (Array.isArray(sortBy) && !sortBy.length))) {
     return array;
   }
   if (typeof reverse === 'string') {
     reverse = reverse === 'descending' ? -1 : 1;
   } else {
-    reverse = (reverse && reverse < 0) ? -1 : 1;
+    reverse = reverse && reverse < 0 ? -1 : 1;
   }
-  const getKey = sortMethod ? null : function(value, index) {
-    if (sortBy) {
-      if (!Array.isArray(sortBy)) {
-        sortBy = [sortBy];
-      }
-      return sortBy.map(function(by) {
-        if (typeof by === 'string') {
-          return getValueByPath(value, by);
-        } else {
-          return by(value, index, array);
+  const getKey = sortMethod
+    ? null
+    : function(value, index) {
+        if (sortBy) {
+          if (!Array.isArray(sortBy)) {
+            sortBy = [sortBy];
+          }
+          return sortBy.map(function(by) {
+            if (typeof by === 'string') {
+              return getValueByPath(value, by);
+            } else {
+              return by(value, index, array);
+            }
+          });
         }
-      });
-    }
-    if (sortKey !== '$key') {
-      if (isObject(value) && '$value' in value) value = value.$value;
-    }
-    return [isObject(value) ? getValueByPath(value, sortKey) : value];
-  };
+        if (sortKey !== '$key') {
+          if (isObject(value) && '$value' in value) value = value.$value;
+        }
+        return [isObject(value) ? getValueByPath(value, sortKey) : value];
+      };
   const compare = function(a, b) {
     if (sortMethod) {
       return sortMethod(a.value, b.value);
@@ -58,20 +60,23 @@ export const orderBy = function(array, sortKey, reverse, sortMethod, sortBy) {
     }
     return 0;
   };
-  return array.map(function(value, index) {
-    return {
-      value: value,
-      index: index,
-      key: getKey ? getKey(value, index) : null
-    };
-  }).sort(function(a, b) {
-    let order = compare(a, b);
-    if (!order) {
-      // make stable https://en.wikipedia.org/wiki/Sorting_algorithm#Stability
-      order = a.index - b.index;
-    }
-    return order * reverse;
-  }).map(item => item.value);
+  return array
+    .map(function(value, index) {
+      return {
+        value: value,
+        index: index,
+        key: getKey ? getKey(value, index) : null,
+      };
+    })
+    .sort(function(a, b) {
+      let order = compare(a, b);
+      if (!order) {
+        // make stable https://en.wikipedia.org/wiki/Sorting_algorithm#Stability
+        order = a.index - b.index;
+      }
+      return order * reverse;
+    })
+    .map(item => item.value);
 };
 
 export const getColumnById = function(table, columnId) {
@@ -168,7 +173,7 @@ export function parseMinWidth(minWidth) {
     }
   }
   return minWidth;
-};
+}
 
 export function parseHeight(height) {
   if (typeof height === 'number') {
@@ -226,7 +231,7 @@ export function toggleRowStatus(statusArr, row, newVal) {
 }
 
 export function walkTreeNode(root, cb, childrenKey = 'children', lazyKey = 'hasChildren') {
-  const isNil = (array) => !(Array.isArray(array) && array.length);
+  const isNil = array => !(Array.isArray(array) && array.length);
 
   function _walker(parent, children, level) {
     cb(parent, children, level);

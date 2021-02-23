@@ -9,12 +9,12 @@ export default {
 
   props: {
     isRange: Boolean,
-    arrowControl: Boolean
+    arrowControl: Boolean,
   },
 
   data() {
     return {
-      type: ''
+      type: '',
     };
   },
 
@@ -29,11 +29,11 @@ export default {
         this.type = isRange ? 'timerange' : 'time';
         this.panel = isRange ? TimeRangePanel : TimePanel;
       }
-    }
+    },
   },
 
   created() {
     this.type = this.isRange ? 'timerange' : 'time';
     this.panel = this.isRange ? TimeRangePanel : TimePanel;
-  }
+  },
 };

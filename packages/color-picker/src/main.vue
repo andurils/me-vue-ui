@@ -40,7 +40,7 @@
 <script>
 import Color from './color';
 import PickerDropdown from './components/picker-dropdown.vue';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
+import Clickoutside from '../../utils/clickoutside';
 import Emitter from '../../mixins/emitter';
 
 export default {
@@ -147,6 +147,7 @@ export default {
       this.resetColor();
     },
     resetColor() {
+      // eslint-disable-next-line no-unused-vars
       this.$nextTick(_ => {
         if (this.value) {
           this.color.fromString(this.value);

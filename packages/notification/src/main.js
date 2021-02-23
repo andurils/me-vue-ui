@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Main from './main.vue';
-import merge from 'element-ui/src/utils/merge';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import { isVNode } from 'element-ui/src/utils/vdom';
+import merge from '../../utils/merge';
+import { PopupManager } from '../../utils/popup';
+import { isVNode } from '../../utils/vdom';
 const NotificationConstructor = Vue.extend(Main);
 
 let instance;
@@ -21,7 +21,7 @@ const Notification = function(options) {
   };
 
   instance = new NotificationConstructor({
-    data: options
+    data: options,
   });
 
   if (isVNode(options.message)) {
@@ -36,9 +36,11 @@ const Notification = function(options) {
   instance.dom.style.zIndex = PopupManager.nextZIndex();
 
   let verticalOffset = options.offset || 0;
-  instances.filter(item => item.position === position).forEach(item => {
-    verticalOffset += item.$el.offsetHeight + 16;
-  });
+  instances
+    .filter(item => item.position === position)
+    .forEach(item => {
+      verticalOffset += item.$el.offsetHeight + 16;
+    });
   verticalOffset += 16;
   instance.verticalOffset = verticalOffset;
   instances.push(instance);
@@ -49,7 +51,7 @@ const Notification = function(options) {
   Notification[type] = options => {
     if (typeof options === 'string' || isVNode(options)) {
       options = {
-        message: options
+        message: options,
       };
     }
     options.type = type;
@@ -77,7 +79,7 @@ Notification.close = function(id, userOnClose) {
   if (len <= 1) return;
   const position = instance.position;
   const removedHeight = instance.dom.offsetHeight;
-  for (let i = index; i < len - 1 ; i++) {
+  for (let i = index; i < len - 1; i++) {
     if (instances[i].position === position) {
       instances[i].dom.style[instance.verticalProperty] =
         parseInt(instances[i].dom.style[instance.verticalProperty], 10) - removedHeight - 16 + 'px';
