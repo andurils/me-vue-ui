@@ -3,6 +3,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+// import VueRouter from 'vue-router';
+// import routes from './route.config';
+
 import 'highlight.js/styles/color-brewer.css';
 
 import '../lib/theme-chalk/index.css';
@@ -15,6 +18,12 @@ Vue.component('demo-block', DemoBlock);
 // 组件引入
 import ZmUI from '../packages/index';
 Vue.use(ZmUI);
+
+// const router = new VueRouter({
+//   mode: 'hash',
+//   base: __dirname,
+//   routes,
+// });
 
 new Vue({
   router,

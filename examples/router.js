@@ -4,6 +4,7 @@ import navConfig from './configs/nav';
 import langs from './configs/lang';
 import Home from './views/Home';
 import locale from './locale';
+
 Vue.use(VueRouter);
 
 const routes = [];
@@ -58,9 +59,9 @@ routes.push({
 });
 
 routes.push({
-  path: '/button',
-  name: 'button',
-  component: () => import('./docs/button.md'),
+  path: '/avatar',
+  name: 'avatar',
+  component: () => import('./docs/avatar.md'),
 });
 
 export default new VueRouter({

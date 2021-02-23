@@ -2,7 +2,7 @@ export default {
   el: {
     colorpicker: {
       confirm: 'OK',
-      clear: 'Clear'
+      clear: 'Clear',
     },
     datepicker: {
       now: 'Now',
@@ -41,7 +41,7 @@ export default {
         wed: 'Wed',
         thu: 'Thu',
         fri: 'Fri',
-        sat: 'Sat'
+        sat: 'Sat',
       },
       months: {
         jan: 'Jan',
@@ -55,48 +55,48 @@ export default {
         sep: 'Sep',
         oct: 'Oct',
         nov: 'Nov',
-        dec: 'Dec'
-      }
+        dec: 'Dec',
+      },
     },
     select: {
       loading: 'Loading',
       noMatch: 'No matching data',
       noData: 'No data',
-      placeholder: 'Select'
+      placeholder: 'Select',
     },
     cascader: {
       noMatch: 'No matching data',
       loading: 'Loading',
       placeholder: 'Select',
-      noData: 'No data'
+      noData: 'No data',
     },
     pagination: {
       goto: 'Go to',
       pagesize: '/page',
       total: 'Total {total}',
-      pageClassifier: ''
+      pageClassifier: '',
     },
     messagebox: {
       title: 'Message',
       confirm: 'OK',
       cancel: 'Cancel',
-      error: 'Illegal input'
+      error: 'Illegal input',
     },
     upload: {
       deleteTip: 'press delete to remove',
       delete: 'Delete',
       preview: 'Preview',
-      continue: 'Continue'
+      continue: 'Continue',
     },
     table: {
       emptyText: 'No Data',
       confirmFilter: 'Confirm',
       resetFilter: 'Reset',
       clearFilter: 'All',
-      sumText: 'Sum'
+      sumText: 'Sum',
     },
     tree: {
-      emptyText: 'No Data'
+      emptyText: 'No Data',
     },
     transfer: {
       noMatch: 'No matching data',
@@ -104,17 +104,17 @@ export default {
       titles: ['List 1', 'List 2'], // to be translated
       filterPlaceholder: 'Enter keyword', // to be translated
       noCheckedFormat: '{total} items', // to be translated
-      hasCheckedFormat: '{checked}/{total} checked' // to be translated
+      hasCheckedFormat: '{checked}/{total} checked', // to be translated
     },
     image: {
-      error: 'FAILED'
+      error: 'FAILED',
     },
     pageHeader: {
-      title: 'Back' // to be translated
+      title: 'Back', // to be translated
     },
     popconfirm: {
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
-    }
-  }
+      cancelButtonText: 'No',
+    },
+  },
 };

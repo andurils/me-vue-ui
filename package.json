@@ -7,7 +7,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-chalk/gulpfile.js && cp-cli packages/theme-chalk/lib lib/theme-chalk",
+    "build:tpl": "node build/bin/template.js",
     "test:unit": "vue-cli-service test:unit",
+    "i18n": "node build/bin/i18n.js",
     "lint": "vue-cli-service lint",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
