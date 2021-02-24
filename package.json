@@ -1,0 +1,35 @@
+{
+  "name": "me-ui",
+  "version": "0.1.0",
+  "description": "A Vue.js 2.0 UI Toolkit for Web",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andurils/me-vue-ui.git"
+  },
+  "author": "anduril",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andurils/me-vue-ui/issues"
+  },
+  "homepage": "https://github.com/andurils/me-vue-ui#readme",
+  "dependencies": {
+    "vue": "^2.6.12"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.1",
+    "@babel/preset-env": "^7.13.5",
+    "css-loader": "^5.0.2",
+    "url-loader": "^4.1.1",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.24.1",
+    "webpack-cli": "^4.5.0"
+  }
+}
