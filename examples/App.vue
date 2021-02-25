@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
+    <JSX></JSX>
     <HelloWorld msg="Welcome to My Vue.js UI  By WebPack!" />
   </div>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import JSX from "./components/JSX.vue";
 
 export default {
   name: "App",
   components: {
     HelloWorld,
+    JSX,
   },
 };
 </script>

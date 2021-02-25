@@ -2,6 +2,7 @@ const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const config = require('./config');
 module.exports = {
     mode: process.env.NODE_ENV,
     entry: "./examples/main.js",
@@ -14,6 +15,12 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.(jsx?|babel|es6)$/,
+                include: process.cwd(),
+                exclude: config.jsexclude,
+                loader: 'babel-loader'
+            },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
