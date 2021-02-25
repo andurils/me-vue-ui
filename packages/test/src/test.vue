@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  name: "MeTest",
+  name: 'MeTest',
   props: {
     bgColor: {
       type: String,
-      default: "#ccc",
+      default: '#ccc',
     },
   },
 };

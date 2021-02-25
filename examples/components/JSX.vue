@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "JSX",
+  name: 'JSX',
   data() {
     return {};
   },
