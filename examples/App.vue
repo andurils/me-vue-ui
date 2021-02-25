@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
+    <div><me-test bgColor="blue"></me-test></div>
     <JSX></JSX>
     <HelloWorld msg="Welcome to My Vue.js UI  By WebPack!" />
   </div>
