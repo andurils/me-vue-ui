@@ -31,9 +31,18 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpg|gif)$/i,
-                loader: 'url-loader',
-            },
+                test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                            // name: path.posix.join('static', '[name].[hash:7].[ext]'),
+                            esModule: false  //“[object Module]”问题
+                        },
+                    },
+                ],
+            }
         ],
     },
     plugins: [new VueLoaderPlugin(), new HtmlWebpackPlugin({
