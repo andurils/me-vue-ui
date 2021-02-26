@@ -1,9 +1,9 @@
-const path = require('path')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ESLintPlugin = require('eslint-webpack-plugin')
+const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-const config = require('./config')
+const config = require('./config');
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: './examples/main.js',
@@ -36,6 +36,23 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
+        test: /\.md$/,
+        // loader: 'vue-markdown-loader',
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              compilerOptions: {
+                preserveWhitespace: false,
+              },
+            },
+          },
+          {
+            loader: path.resolve(__dirname, './md-loader/index.js'),
+          },
+        ],
+      },
+      {
         test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,
         use: [
           {
@@ -61,4 +78,4 @@ module.exports = {
       inject: true,
     }),
   ],
-}
+};

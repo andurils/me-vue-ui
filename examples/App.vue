@@ -2,20 +2,29 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <div><me-test bgColor="blue"></me-test></div>
+
+    <!-- 
+    
     <JSX></JSX>
-    <HelloWorld msg="Welcome to My Vue.js UI  By WebPack Eslint!" />
+    <HelloWorld msg="Welcome to My Vue.js UI  By WebPack Eslint!" /> -->
+
+    <div id="nav">
+      <router-link to="/">Home</router-link> | <router-link to="/jsx">jsx</router-link> |
+      <router-link to="/test">.md</router-link>
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import JSX from './components/JSX.vue';
+// import HelloWorld from './components/HelloWorld.vue';
+// import JSX from './components/JSX.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    JSX,
+    // HelloWorld,
+    // JSX,
   },
 };
 </script>
@@ -28,5 +37,15 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#nav {
+  padding: 30px;
+}
+a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+.router-link-exact-active {
+  color: #42b983;
 }
 </style>

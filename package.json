@@ -9,7 +9,8 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.js"
   },
   "dependencies": {
-    "babel-helper-vue-jsx-merge-props": "^2.0.3"
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "transliteration": "^2.2.0"
   },
   "peerDependencies": {
     "vue": "^2.6.12"
@@ -18,6 +19,7 @@
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.1",
     "@babel/preset-env": "^7.13.5",
+    "@vue/component-compiler-utils": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-syntax-jsx": "^6.18.0",
@@ -32,11 +34,17 @@
     "eslint-webpack-plugin": "^2.5.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.2.0",
+    "markdown-it": "^12.0.4",
+    "markdown-it-anchor": "^7.0.2",
+    "markdown-it-chain": "^1.3.0",
+    "markdown-it-container": "^3.0.0",
     "prettier": "2.2.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
+    "vue-markdown-loader": "^2.4.1",
+    "vue-router": "^3.5.1",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^5.24.1",
     "webpack-cli": "^3.3.12",
