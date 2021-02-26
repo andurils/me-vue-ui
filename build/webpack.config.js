@@ -37,7 +37,6 @@ module.exports = {
       },
       {
         test: /\.md$/,
-        // loader: 'vue-markdown-loader',
         use: [
           {
             loader: 'vue-loader',
