@@ -11,6 +11,13 @@ module.exports = {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
   },
+  resolve: {
+    //省略后缀与加载文件夹;
+    extensions: ['.js', '.vue', '.json'],
+    // alias: {
+    //   '@': resolve('src')
+    // }
+  },
   devServer: {
     contentBase: './dist',
   },

@@ -2,12 +2,6 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <div><me-test bgColor="blue"></me-test></div>
-
-    <!-- 
-    
-    <JSX></JSX>
-    <HelloWorld msg="Welcome to My Vue.js UI  By WebPack Eslint!" /> -->
-
     <div id="nav">
       <router-link to="/">Home</router-link> | <router-link to="/jsx">jsx</router-link> |
       <router-link to="/test">.md</router-link>
@@ -17,9 +11,6 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue';
-// import JSX from './components/JSX.vue';
-
 export default {
   name: 'App',
   components: {
