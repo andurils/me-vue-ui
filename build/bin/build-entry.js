@@ -30,12 +30,12 @@ const install = function (Vue, opts = {}) {
   //Vue.use(InfiniteScroll);
   //Vue.use(Loading.directive);
 
-  /*
-  Vue.prototype.$ELEMENT = {
+ 
+  Vue.prototype.$ME = {
     size: opts.size || '',
     zIndex: opts.zIndex || 2000
   };
-
+ /*
   Vue.prototype.$loading = Loading.service;
   Vue.prototype.$msgbox = MessageBox;
   Vue.prototype.$alert = MessageBox.alert;

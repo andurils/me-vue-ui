@@ -18,6 +18,12 @@ routes.push({
 });
 
 routes.push({
+  path: '/button',
+  name: 'button',
+  component: () => import('./docs/button.md'),
+});
+
+routes.push({
   path: '/jsx',
   name: 'jsx',
   component: () => import('./components/JSX.vue'),

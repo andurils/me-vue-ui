@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <div><me-test bgColor="blue"></me-test></div>
     <div id="nav">
-      <router-link to="/">Home</router-link> | <router-link to="/jsx">jsx</router-link> |
+      <router-link to="/">Home</router-link> |<router-link to="/button">button</router-link> |
+      <router-link to="/jsx">jsx</router-link> |
       <router-link to="/test">.md</router-link>
     </div>
     <router-view />

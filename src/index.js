@@ -2,12 +2,14 @@
 
 import Test from '../packages/test/index.js';
 import Button from '../packages/button/index.js';
+import Tooltip from '../packages/tooltip/index.js';
 //import locale from 'element-ui/src/locale';
 //import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
 const components = [
   Test,
   Button,
+  Tooltip,
   // CollapseTransition
 ];
 
@@ -22,12 +24,11 @@ const install = function (Vue, opts = {}) {
   //Vue.use(InfiniteScroll);
   //Vue.use(Loading.directive);
 
-  /*
-  Vue.prototype.$ELEMENT = {
+  Vue.prototype.$ME = {
     size: opts.size || '',
-    zIndex: opts.zIndex || 2000
+    zIndex: opts.zIndex || 2000,
   };
-
+  /*
   Vue.prototype.$loading = Loading.service;
   Vue.prototype.$msgbox = MessageBox;
   Vue.prototype.$alert = MessageBox.alert;
@@ -52,4 +53,5 @@ export default {
   //Loading,
   Test,
   Button,
+  Tooltip,
 };

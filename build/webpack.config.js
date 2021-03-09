@@ -12,13 +12,16 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    //省略后缀与加载文件夹;
+    // 引入模块时不带扩展
     extensions: ['.js', '.vue', '.json'],
-    // alias: {
-    //   '@': resolve('src')
-    // }
+    // 创建 import 或 require 的别名，来确保模块引入变得更简单
+    alias: config.alias,
+    // 解析模块时应该搜索的目录
+    modules: ['node_modules'],
   },
   devServer: {
+    port: 8085,
+    hot: true,
     contentBase: './dist',
   },
   module: {
@@ -39,8 +42,8 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(scss|css)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.md$/,
