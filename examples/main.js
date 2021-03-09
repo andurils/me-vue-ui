@@ -2,15 +2,13 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import hljs from 'highlight.js';
-
 import MeUI from '../src/index';
 import demoBlock from './components/demo-block';
 
-import '../lib/theme-chalk/index.css';
+import '../lib/theme-gondor/index.css';
 import './demo-styles/index.scss';
 import './assets/styles/common.css';
 import './assets/styles/fonts/style.css';
-
 import 'highlight.js/styles/dracula.css'; //代码高亮样式
 
 Vue.config.productionTip = false;
