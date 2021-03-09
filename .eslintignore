@@ -4,5 +4,6 @@ lib
 dist
 *.md
 *.scss
+*.css
 *.woff
 *.ttf

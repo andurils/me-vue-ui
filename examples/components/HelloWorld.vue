@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Vue logo" src="../assets/images/logo.png" />
     <div><me-test bgColor="blue"></me-test></div>
     <h1>{{ msg }}</h1>
     <p>
