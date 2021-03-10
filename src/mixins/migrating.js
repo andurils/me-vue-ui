@@ -30,6 +30,7 @@ export default {
     const { data, componentOptions } = this.$vnode;
     const definedProps = data.attrs || {};
     const definedEvents = componentOptions.listeners || {};
+    console.log(props, events, this.$vnode, definedProps, definedEvents);
 
     for (let propName in definedProps) {
       propName = kebabCase(propName); // compatible with camel case

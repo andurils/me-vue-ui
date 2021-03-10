@@ -37,12 +37,12 @@
 </div>
 
 <div>
-  <me-button icon="el-icon-search" circle></me-button>
-  <me-button type="primary" icon="el-icon-edit" circle></me-button>
-  <me-button type="success" icon="el-icon-check" circle></me-button>
-  <me-button type="info" icon="el-icon-message" circle></me-button>
-  <me-button type="warning" icon="el-icon-star-off" circle></me-button>
-  <me-button type="danger" icon="el-icon-delete" circle></me-button>
+  <me-button icon="me-icon-search" circle></me-button>
+  <me-button type="primary" icon="me-icon-edit" circle></me-button>
+  <me-button type="success" icon="me-icon-check" circle></me-button>
+  <me-button type="info" icon="me-icon-message" circle></me-button>
+  <me-button type="warning" icon="me-icon-star-off" circle></me-button>
+  <me-button type="danger" icon="me-icon-delete" circle></me-button>
 </div>
 ```
 
@@ -95,11 +95,11 @@
 :::demo 设置`icon`属性即可，icon 的列表可以参考 Element 的 icon 组件，也可以设置在文字右边的 icon ，只要使用`i`标签即可，可以使用自定义图标。
 
 ```html
-<me-button type="primary" icon="el-icon-edit"></me-button>
-<me-button type="primary" icon="el-icon-share"></me-button>
-<me-button type="primary" icon="el-icon-delete"></me-button>
-<me-button type="primary" icon="el-icon-search">搜索</me-button>
-<me-button type="primary">上传<i class="el-icon-upload el-icon--right"></i></me-button>
+<me-button type="primary" icon="me-icon-edit"></me-button>
+<me-button type="primary" icon="me-icon-share"></me-button>
+<me-button type="primary" icon="me-icon-delete"></me-button>
+<me-button type="primary" icon="me-icon-search">搜索</me-button>
+<me-button type="primary">上传<i class="me-icon-upload me-icon--right"></i></me-button>
 ```
 
 :::
@@ -112,13 +112,13 @@
 
 ```html
 <me-button-group>
-  <me-button type="primary" icon="el-icon-arrow-left">上一页</me-button>
-  <me-button type="primary">下一页<i class="el-icon-arrow-right el-icon--right"></i></me-button>
+  <me-button type="primary" icon="me-icon-arrow-left">上一页</me-button>
+  <me-button type="primary">下一页<i class="me-icon-arrow-right me-icon--right"></i></me-button>
 </me-button-group>
 <me-button-group>
-  <me-button type="primary" icon="el-icon-edit"></me-button>
-  <me-button type="primary" icon="el-icon-share"></me-button>
-  <me-button type="primary" icon="el-icon-delete"></me-button>
+  <me-button type="primary" icon="me-icon-edit"></me-button>
+  <me-button type="primary" icon="me-icon-share"></me-button>
+  <me-button type="primary" icon="me-icon-delete"></me-button>
 </me-button-group>
 ```
 

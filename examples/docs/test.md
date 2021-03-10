@@ -4,9 +4,7 @@
 
 运行结果如下 <me-test bgColor="blue"></me-test>
 
-<me-button>默认按钮</me-button> <me-button type="primary">主要按钮</me-button> <me-button type="success">成功按钮</me-button> <me-button type="info">信息按钮</me-button> <me-button type="warning">警告按钮</me-button> <me-button type="danger">危险按钮</me-button>
-
-<me-button icon="el-icon-search" circle></me-button> <me-button type="primary" icon="el-icon-edit" circle></me-button> <me-button type="success" icon="el-icon-check" circle></me-button> <me-button type="info" icon="el-icon-message" circle></me-button> <me-button type="warning" icon="el-icon-star-off" circle></me-button> <me-button type="danger" icon="el-icon-delete" circle></me-button>
+<me-button icon="el-icon-arrow-left" size="medium" plain circle type="danger"   >上一页</me-button>
 
 代码如下
 

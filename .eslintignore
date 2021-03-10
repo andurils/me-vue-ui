@@ -7,3 +7,6 @@ dist
 *.css
 *.woff
 *.ttf
+
+# files
+package.json

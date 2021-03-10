@@ -1,5 +1,7 @@
 {
-    "test": "./packages/test/index.js",
-    "button": "./packages/button/index.js",
-    "tooltip": "./packages/tooltip/index.js"
+  "test": "./packages/test/index.js",
+  "button": "./packages/button/index.js",
+  "tooltip": "./packages/tooltip/index.js",
+  "button-group": "./packages/button-group/index.js",
+  "icon": "./packages/icon/index.js"
 }
