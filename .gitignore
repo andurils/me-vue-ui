@@ -28,3 +28,4 @@ yarn.lock
 
 # 测试
 lib
+examples/pages/zh-CN

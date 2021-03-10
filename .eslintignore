@@ -7,6 +7,8 @@ dist
 *.css
 *.woff
 *.ttf
+.tpl
 
 # files
 package.json
+examples/pages
