@@ -2,7 +2,15 @@
 
 ```html
 <me-row>
-  <me-col :span="24"><div class="grid-content bg-purple-dark"></div></me-col>
+  <me-col :span="24"><div class="grid-content bg-purple-dark">1111</div></me-col>
+</me-row>
+<me-row>
+  <me-col :span="4"><div class="grid-content bg-purple"></div></me-col>
+  <me-col :span="4"><div class="grid-content bg-purple-light"></div></me-col>
+  <me-col :span="4"><div class="grid-content bg-purple"></div></me-col>
+  <me-col :span="4"><div class="grid-content bg-purple-light"></div></me-col>
+  <me-col :span="4"><div class="grid-content bg-purple"></div></me-col>
+  <me-col :span="4"><div class="grid-content bg-purple-light"></div></me-col>
 </me-row>
 
 <style>

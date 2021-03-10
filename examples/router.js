@@ -22,6 +22,11 @@ routes.push({
   name: 'button',
   component: () => import('./docs/button.md'),
 });
+routes.push({
+  path: '/layout',
+  name: 'layout',
+  component: () => import('./docs/layout.md'),
+});
 
 routes.push({
   path: '/jsx',

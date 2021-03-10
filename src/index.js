@@ -5,6 +5,8 @@ import Button from '../packages/button/index.js';
 import Tooltip from '../packages/tooltip/index.js';
 import ButtonGroup from '../packages/button-group/index.js';
 import Icon from '../packages/icon/index.js';
+import Row from '../packages/row/index.js';
+import Col from '../packages/col/index.js';
 //import locale from 'element-ui/src/locale';
 //import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -14,6 +16,8 @@ const components = [
   Tooltip,
   ButtonGroup,
   Icon,
+  Row,
+  Col,
   // CollapseTransition
 ];
 
@@ -60,4 +64,6 @@ export default {
   Tooltip,
   ButtonGroup,
   Icon,
+  Row,
+  Col,
 };

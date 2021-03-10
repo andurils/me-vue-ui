@@ -3,5 +3,7 @@
   "button": "./packages/button/index.js",
   "tooltip": "./packages/tooltip/index.js",
   "button-group": "./packages/button-group/index.js",
-  "icon": "./packages/icon/index.js"
+  "icon": "./packages/icon/index.js",
+  "row": "./packages/row/index.js",
+  "col": "./packages/col/index.js"
 }

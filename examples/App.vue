@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |<router-link to="/button">button</router-link> |
-      <router-link to="/jsx">jsx</router-link> |
+      <router-link to="/">Home</router-link> |<router-link to="/button">button</router-link>
+      |<router-link to="/layout">layout</router-link>| <router-link to="/jsx">jsx</router-link> |
       <router-link to="/test">.md</router-link>
     </div>
     <router-view />

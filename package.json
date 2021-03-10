@@ -4,7 +4,7 @@
   "description": "A Vue.js 2.0 UI Toolkit for Web",
   "scripts": {
     "bootstrap": "yarn || npm i",
-    "build:file": "node build/bin/build-entry.js",
+    "build:file": "node build/bin/build-entry.js && npm run lint",
     "build:dist": "cross-env NODE_ENV=development webpack --config  build/webpack.config.js",
     "build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-gondor/gulpfile.js && cp-cli packages/theme-gondor/lib lib/theme-gondor",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.js",
