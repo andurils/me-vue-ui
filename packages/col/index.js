@@ -1,8 +1,8 @@
-import MeCol from './src/col';
+import Col from './src/col';
 
 /* istanbul ignore next */
-MeCol.install = function (Vue) {
-  Vue.component(MeCol.name, MeCol);
+Col.install = function (Vue) {
+  Vue.component(Col.name, Col);
 };
 
-export default MeCol;
+export default Col;

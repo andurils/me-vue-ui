@@ -1,8 +1,8 @@
-import MeRow from './src/row';
+import Row from './src/row';
 
 /* istanbul ignore next */
-MeRow.install = function (Vue) {
-  Vue.component(MeRow.name, MeRow);
+Row.install = function (Vue) {
+  Vue.component(Row.name, Row);
 };
 
-export default MeRow;
+export default Row;

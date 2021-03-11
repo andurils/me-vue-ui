@@ -1,8 +1,9 @@
-import MeBacktop from './src/main';
+import Backtop from './src/main';
 
 /* istanbul ignore next */
-MeBacktop.install = function (Vue) {
-  Vue.component(MeBacktop.name, MeBacktop);
+Backtop.install = function (Vue) {
+  Vue.component(Backtop.name, Backtop);
 };
 
-export default MeBacktop;
+export default Backtop;
+// TODO:命名没有采用  MeBacktop 样式不渲染
