@@ -7,6 +7,8 @@ import ButtonGroup from '../packages/button-group/index.js';
 import Icon from '../packages/icon/index.js';
 import Row from '../packages/row/index.js';
 import Col from '../packages/col/index.js';
+import Scrollbar from '../packages/scrollbar/index.js';
+import Backtop from '../packages/backtop/index.js';
 //import locale from 'element-ui/src/locale';
 //import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
 
@@ -18,6 +20,8 @@ const components = [
   Icon,
   Row,
   Col,
+  Scrollbar,
+  Backtop,
   // CollapseTransition
 ];
 
@@ -66,4 +70,6 @@ export default {
   Icon,
   Row,
   Col,
+  Scrollbar,
+  Backtop,
 };

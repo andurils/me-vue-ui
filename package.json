@@ -16,6 +16,7 @@
   "dependencies": {
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "normalize-wheel": "^1.0.1",
+    "resize-observer-polyfill": "^1.5.1",
     "throttle-debounce": "^3.0.1"
   },
   "peerDependencies": {

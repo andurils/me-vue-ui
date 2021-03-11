@@ -171,6 +171,7 @@
 </style>
 
 <script type="text/babel">
+import compoLang from '../i18n/component.json';
 import { stripScript, stripStyle, stripTemplate } from '../util';
 
 export default {
@@ -208,13 +209,7 @@ export default {
     },
 
     langConfig() {
-      var result = {
-        'hide-text': '隐藏代码',
-        'show-text': '显示代码',
-        'button-text': '在线运行',
-        'tooltip-text': '前往 codepen.io 运行此示例',
-      };
-      return result;
+      return compoLang.filter((config) => config.lang === this.lang)[0]['demo-block'];
     },
 
     blockClass() {
@@ -222,7 +217,7 @@ export default {
     },
 
     iconClass() {
-      return this.isExpanded ? 'el-icon-caret-top' : 'el-icon-caret-bottom';
+      return this.isExpanded ? 'me-icon-caret-top' : 'me-icon-caret-bottom';
     },
 
     controlText() {
@@ -255,7 +250,7 @@ export default {
         return;
       }
       setTimeout(() => {
-        this.scrollParent = document.querySelector('.page-component__scroll > .el-scrollbar__wrap');
+        this.scrollParent = document.querySelector('.page-component__scroll > .me-scrollbar__wrap');
         this.scrollParent && this.scrollParent.addEventListener('scroll', this.scrollHandler);
         this.scrollHandler();
       }, 200);
