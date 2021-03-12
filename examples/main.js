@@ -5,8 +5,8 @@ import MeUI from '../src/index.js';
 import hljs from 'highlight.js';
 import routes from './route.config';
 import demoBlock from './components/demo-block';
-// import MainFooter from './components/footer';
-// import MainHeader from './components/header';
+import MainHeader from './components/header';
+import MainFooter from './components/footer';
 import SideNav from './components/side-nav';
 // import FooterNav from './components/footer-nav';
 
@@ -21,8 +21,8 @@ Vue.config.productionTip = false;
 Vue.use(MeUI);
 Vue.use(VueRouter);
 Vue.component('demo-block', demoBlock);
-// Vue.component('main-footer', MainFooter);
-// Vue.component('main-header', MainHeader);
+Vue.component('main-header', MainHeader);
+Vue.component('main-footer', MainFooter);
 Vue.component('side-nav', SideNav);
 // Vue.component('footer-nav', FooterNav);
 

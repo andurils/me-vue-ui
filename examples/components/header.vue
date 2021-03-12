@@ -289,9 +289,6 @@
 
         <!-- nav -->
         <ul class="nav">
-          <li class="nav-item nav-algolia-search" v-show="isComponentPage">
-            <algolia-search></algolia-search>
-          </li>
           <li class="nav-item">
             <router-link active-class="active" :to="`/${lang}/guide`"
               >{{ langConfig.guide }}
@@ -302,74 +299,10 @@
               >{{ langConfig.components }}
             </router-link>
           </li>
-          <li class="nav-item nav-item-theme">
-            <router-link active-class="active" :to="`/${lang}/theme`"
-              >{{ langConfig.theme }}
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link active-class="active" :to="`/${lang}/resource`" exact
-              >{{ langConfig.resource }}
-            </router-link>
-          </li>
 
           <!-- gap -->
           <li class="nav-item" v-show="isComponentPage">
             <div class="nav-gap"></div>
-          </li>
-
-          <!-- 版本选择器 -->
-          <li class="nav-item nav-versions" v-show="isComponentPage">
-            <el-dropdown
-              trigger="click"
-              class="nav-dropdown"
-              :class="{ 'is-active': verDropdownVisible }"
-            >
-              <span>
-                {{ version }}
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu
-                slot="dropdown"
-                class="nav-dropdown-list"
-                @input="handleVerDropdownToggle"
-              >
-                <el-dropdown-item
-                  v-for="item in Object.keys(versions)"
-                  :key="item"
-                  @click.native="switchVersion(item)"
-                >
-                  {{ item }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
-
-          <!-- 语言选择器 -->
-          <li class="nav-item lang-item">
-            <el-dropdown
-              trigger="click"
-              class="nav-dropdown nav-lang"
-              :class="{ 'is-active': langDropdownVisible }"
-            >
-              <span>
-                {{ displayedLang }}
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </span>
-              <el-dropdown-menu
-                slot="dropdown"
-                class="nav-dropdown-list"
-                @input="handleLangDropdownToggle"
-              >
-                <el-dropdown-item
-                  v-for="(value, key) in langs"
-                  :key="key"
-                  @click.native="switchLang(key)"
-                >
-                  {{ value }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
           </li>
         </ul>
       </div>
@@ -377,40 +310,22 @@
   </div>
 </template>
 <script>
-// import ThemePicker from './theme-picker.vue';
-import AlgoliaSearch from './search.vue';
 import compoLang from '../i18n/component.json';
-import Element from 'main/index.js';
-import themeLoader from './theme/loader';
-import { getTestEle } from './theme/loader/api.js';
 import bus from '../bus';
-import { ACTION_USER_CONFIG_UPDATE } from './theme/constant.js';
-
-const { version } = Element;
-
 export default {
   data() {
     return {
       active: '',
       versions: [],
-      version,
       verDropdownVisible: true,
       langDropdownVisible: true,
       langs: {
         'zh-CN': '中文',
-        'en-US': 'English',
-        es: 'Español',
-        'fr-FR': 'Français',
       },
     };
   },
 
-  mixins: [themeLoader],
-
-  components: {
-    ThemePicker,
-    AlgoliaSearch,
-  },
+  components: {},
 
   computed: {
     lang() {
@@ -427,6 +342,7 @@ export default {
     },
   },
   mounted() {
+    // eslint-disable-next-line no-undef
     getTestEle()
       .then(() => {
         this.$isEle = true;
@@ -483,6 +399,7 @@ export default {
     xhr.open('GET', '/versions.json');
     xhr.send();
     let primaryLast = '#409EFF';
+    // eslint-disable-next-line no-undef
     bus.$on(ACTION_USER_CONFIG_UPDATE, (val) => {
       let primaryColor = val.global['$--color-primary'];
       if (!primaryColor) primaryColor = '#409EFF';

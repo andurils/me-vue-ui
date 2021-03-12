@@ -1,3 +1,7 @@
+/*生成入口文件
+ *theme-gondor 字体文件，scss相关变量、mixin及公共样式设置，各UI组件对应的scss文件
+ *gen-cssfile根据components.json获取组件名，找到packages/theme-gondor对应的各组件的scss文件信息
+ */
 var fs = require('fs');
 var path = require('path');
 var Components = require('../../components.json');

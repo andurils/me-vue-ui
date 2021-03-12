@@ -1,11 +1,16 @@
 {
-  "test": "./packages/test/index.js",
+  "alert": "./packages/alert/index.js",
+  "avatar": "./packages/avatar/index.js",
+  "backtop": "./packages/backtop/index.js",
+  "badge": "./packages/badge/index.js",
   "button": "./packages/button/index.js",
-  "tooltip": "./packages/tooltip/index.js",
+  "breadcrumb": "./packages/breadcrumb/index.js",
+  "breadcrumb-item": "./packages/breadcrumb-item/index.js",
   "button-group": "./packages/button-group/index.js",
+  "col": "./packages/col/index.js",
   "icon": "./packages/icon/index.js",
   "row": "./packages/row/index.js",
-  "col": "./packages/col/index.js",
   "scrollbar": "./packages/scrollbar/index.js",
-  "backtop": "./packages/backtop/index.js"
+  "tooltip": "./packages/tooltip/index.js",
+  "test": "./packages/test/index.js"
 }
