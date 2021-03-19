@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-undef */
+// tooltips 提示插件
 /**
  * @fileOverview Kickass library to create and place poppers near their reference elements.
  * @version {{version}}
@@ -30,52 +31,72 @@
 // Cross module loader
 // Supported: Node, AMD, Browser globals
 //
+/**
+ * 模块处理，支持：Node，AMD，浏览器全局变量
+ * root 指代全局变量
+ * factory 指代下面的 Popper
+ */
+
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
+    // AMD.注册一个匿名模块
     define(factory);
   } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
+    // Node环境。
+    // 并不支持严格的 CommonJS，但是支持类似 Node 这样支持 module.exports 的类 CommonJS 环境
     module.exports = factory();
   } else {
     // Browser globals (root is window)
+    // 浏览器的全局变量，root指代window
     root.Popper = factory();
   }
 })(this, function () {
   'use strict';
-
+  // 全局变量，其实这里有更好的方法，但是因为只需要处理浏览器环境下的全局变量所以直接这样写了
   var root = window;
 
   // default options
+  // 默认选项
   var DEFAULTS = {
     // placement of the popper
+    // 放置位置
     placement: 'bottom',
-
+    // 是否开启 GPU 加速
     gpuAcceleration: true,
 
     // shift popper from its origin by the given amount of pixels (can be negative)
+    // 根据给定的像素值将 popper 从原位置进行偏移（可以是负值）
     offset: 0,
 
     // the element which will act as boundary of the popper
+    // popper 的边界元素
     boundariesElement: 'viewport',
 
     // amount of pixel used to define a minimum distance between the boundaries and the popper
+    // popper 与边界元素的最小距离
     boundariesPadding: 5,
 
     // popper will try to prevent overflow following this order,
     // by default, then, it could overflow on the left and on top of the boundariesElement
+    // popper 会尝试以如下顺序防止溢出，默认情况下他可能在边界元素的左边界和上边界出现溢出
     preventOverflowOrder: ['left', 'right', 'top', 'bottom'],
 
     // the behavior used by flip to change the placement of the popper
+    // 改变 popper 位置时的选项，默认是翻转到对称面上
     flipBehavior: 'flip',
 
+    // 箭头元素
     arrowElement: '[x-arrow]',
 
+    // 箭头元素偏移量
     arrowOffset: 0,
 
     // list of functions used to modify the offsets before they are applied to the popper
+    // popper 偏移值的修饰符，用来在偏移值应用到 popper 之前进行修改
     modifiers: [
       'shift',
       'offset',
@@ -86,8 +107,10 @@
       'applyStyle',
     ],
 
+    // 不使用的函数
     modifiersIgnored: [],
 
+    // 绝对定位
     forceAbsolute: false,
   };
 
@@ -156,50 +179,128 @@
    * @param {Boolean} [options.removeOnDestroy=false]
    *      Set to true if you want to automatically remove the popper when you call the `destroy` method.
    */
+  /**
+   * 创建 Popper.js 的实例
+   * @constructor Popper
+   * @param {HTMLElement} reference - 用来定位popper的相关元素
+   * @param {HTMLElement|Object} popper 用来作为 popper 的HTML元素，或者用来生成 popper 的配置
+   * @param {String} [popper.tagName='div'] 生成的 popper 的标签名
+   * @param {Array} [popper.classNames=['popper']] 给生成的 popper 添加的类名数组
+   * @param {Array} [popper.attributes] 通过 `attr:value` 的形式给 popper 添加属性
+   * @param {HTMLElement|String} [popper.parent=window.document.body] 父元素的HTML元素或者查询字符串
+   * @param {String} [popper.content=''] popper 的内容，可以是文本、HTML或者结点；如果不是文本，应当将 `contentType` 设置为 `html` 或者 `node`
+   * @param {String} [popper.contentType='text'] 如果是 `html` 内容会变当做 HTML 解析；如果是 `node` 会原样插入
+   * @param {String} [popper.arrowTagName='div'] 箭头元素的标签名
+   * @param {Array} [popper.arrowClassNames='popper__arrow'] 应用于箭头元素的类名数组
+   * @param {String} [popper.arrowAttributes=['x-arrow']] 应用于箭头元素的属性
+   * @param {Object} options 选项
+   * @param {String} [options.placement=bottom]
+   *      popper 放置位置，可接受如下值：
+   *          top(-start, -end)
+   *          right(-start, -end)
+   *          bottom(-start, -right)
+   *          left(-start, -end)
+   *
+   * @param {HTMLElement|String} [options.arrowElement='[x-arrow]']
+   *      用于 popper 的箭头的 DOM 结点，或者用来获取该节点的 CSS 选择器。
+   *      它应当是父级 Popper 的孩子节点。
+   *      Popper.js 会给该元素添加必须的样式来和它相关的元素对其。
+   *      默认情况下，他会寻找 popper 子结点中包含 `x-arrow` 属性的结点。
+   *
+   * @param {Boolean} [options.gpuAcceleration=true]
+   *      If set to false, the popper will be placed using `top` and `left` properties, not using the GPU.
+   *      当这一属性被设置为 true 时，popper 的位置将通过 CSS3 的 translate3d 来改变。
+   *      这样会让浏览器使用 GPU 来加速渲染过程。
+   *      如果设置为 false，popper 将通过 `top` 和 `left` 属性来定位，并不会使用 GPU。
+   *
+   * @param {Number} [options.offset=0]
+   *      popper 偏移的像素值（可以是负数）。
+   *
+   * @param {String|Element} [options.boundariesElement='viewport']
+   *      用来定义 popper 边界的元素。
+   *      popper 绝不会超出该边界（除非允许 `keepTogether`）。
+   *
+   * @param {Number} [options.boundariesPadding=5]
+   *      边界的内边距。
+   *
+   * @param {Array} [options.preventOverflowOrder=['left', 'right', 'top', 'bottom']]
+   *      Popper.js 根据这个顺序来避免溢出边界，他们会依次检测，这意味着最后的情况绝对不会溢出（即 right 和 bottom）。
+   *
+   * @param {String|Array} [options.flipBehavior='flip']
+   *      用来指定 `flip` 修饰符的行为，这一修饰符是用来在 popper 要覆盖其相关元素时改变 popper 位置的。
+   *      如果设置为 `flip`，popper 的位置将根据对称轴翻转（左右或者上下）。
+   *      也可以传递位置数组（如 `['right', 'left', 'top']`）来手动指定需要改变时的位置顺序。
+   *      （例如，在这个例子里，首先会从右边翻转到左边，然后如果仍然覆盖了相关元素，将会移动到上边）
+   *
+   * @param {Array} [options.modifiers=[ 'shift', 'offset', 'preventOverflow', 'keepTogether', 'arrow', 'flip', 'applyStyle']]
+   *      用来改变应用到 popper 的数值的修饰符。
+   *      可以添加自定义的函数来改变偏移值和位置。
+   *      自定义的函数应当有 preventOverflow 的参数和返回值。
+   *
+   * @param {Array} [options.modifiersIgnored=[]]
+   *      指定需要移除的内置的修饰符。
+   *
+   * @param {Boolean} [options.removeOnDestroy=false]
+   *      当你想要在调用 `destroy` 方法时自动移除 popper 时，应当将此项设置为 true。
+   */
   function Popper(reference, popper, options) {
+    // 保存相关元素的引用，如果是 jQuery 实例，则取[0]，即获得原始的 HTML 结点
     this._reference = reference.jquery ? reference[0] : reference;
+    // 状态对象初始化
     this.state = {};
 
     // if the popper variable is a configuration object, parse it to generate an HTMLElement
     // generate a default popper if is not defined
-    var isNotDefined = typeof popper === 'undefined' || popper === null;
-    var isConfig = popper && Object.prototype.toString.call(popper) === '[object Object]';
+    // 如果 popper 变量是一个用来配置的对象，就通过解析它来生成 HTMLElement， 如果没有指定就生成一个默认的 popper
+    var isNotDefined = typeof popper === 'undefined' || popper === null; // 判断是否定义了 popper
+    var isConfig = popper && Object.prototype.toString.call(popper) === '[object Object]'; // 判断 popper 是不是对象
+    // 如果没有定义并且有配置对象
     if (isNotDefined || isConfig) {
-      this._popper = this.parse(isConfig ? popper : {});
+      this._popper = this.parse(isConfig ? popper : {}); // 通过该配置生成，或者生成一个默认的
     }
     // otherwise, use the given HTMLElement as popper
+    // 否则使用给定的 HTMLElement 作为 popper
     else {
       this._popper = popper.jquery ? popper[0] : popper;
     }
 
     // with {} we create a new object with the options inside it
+    // 合并默认选项和传参的选项生成新的选项
     this._options = Object.assign({}, DEFAULTS, options);
 
     // refactoring modifiers' list
+    // 重新生成修饰符列表
     this._options.modifiers = this._options.modifiers.map(
       function (modifier) {
         // remove ignored modifiers
+        // 移除忽略的修饰符
         if (this._options.modifiersIgnored.indexOf(modifier) !== -1) return;
 
         // set the x-placement attribute before everything else because it could be used to add margins to the popper
         // margins needs to be calculated to get the correct popper offsets
+        // 将设置 x-placement 提到最前面，因为它会被用来给 popper 增加边距
+        // 而边距将被用来计算正确的 popper 的偏移
         if (modifier === 'applyStyle') {
           this._popper.setAttribute('x-placement', this._options.placement);
         }
 
         // return predefined modifier identified by string or keep the custom one
+        // 返回内置的修饰符或者自定义的
         return this.modifiers[modifier] || modifier;
       }.bind(this),
     );
 
     // make sure to apply the popper position before any computation
+    // 确保在计算前已经应用了 popper 的位置
     this.state.position = this._getPosition(this._popper, this._reference);
     setStyle(this._popper, { position: this.state.position, top: 0 });
 
     // fire the first update to position the popper in the right place
+    // 触发 update 来让 popper 定位到正确的位置
     this.update();
 
     // setup event listeners, they will take care of update the position in specific situations
+    // 添加相关的事件监听，它们会在一定的情况下处理位置更新
     this._setupEventListeners();
     return this;
   }
@@ -212,13 +313,21 @@
    * @method
    * @memberof Popper
    */
+  //
+  // 方法
+  //
+  /**
+   * 销毁 popper
+   * @method
+   * @memberof Popper
+   */
   Popper.prototype.destroy = function () {
-    this._popper.removeAttribute('x-placement');
-    this._popper.style.left = '';
-    this._popper.style.position = '';
-    this._popper.style.top = '';
-    this._popper.style[getSupportedPropertyName('transform')] = '';
-    this._removeEventListeners();
+    this._popper.removeAttribute('x-placement'); // 移除 x-placement 属性
+    this._popper.style.left = ''; // left 设置为空
+    this._popper.style.position = ''; // position 设置为空
+    this._popper.style.top = ''; // top 设置为空
+    this._popper.style[getSupportedPropertyName('transform')] = ''; // transform 设置为空
+    this._removeEventListeners(); // 移除事件监听
 
     // remove the popper if user explicity asked for the deletion on destroy
     if (this._options.removeOnDestroy) {
