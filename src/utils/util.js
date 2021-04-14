@@ -1,14 +1,23 @@
+// 常用函数的封装
 import Vue from 'vue';
 import { isString, isObject } from './types';
 
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 
+// 空函数
 export function noop() {}
 
+// 用来判断一个属性是定义在对象本身而不是继承自原型链
 export function hasOwn(obj, key) {
   return hasOwnProperty.call(obj, key);
 }
 
+/**
+ * @function  将一个对象的内容合并到目标对象
+ * @description 如果对象具有相同的属性，则后者会覆盖前者的属性值
+ * @param to 目标对象
+ * @param _from 被合并的对象
+ */
 function extend(to, _from) {
   for (let key in _from) {
     to[key] = _from[key];
@@ -16,6 +25,7 @@ function extend(to, _from) {
   return to;
 }
 
+// 数组转对象
 export function toObject(arr) {
   var res = {};
   for (let i = 0; i < arr.length; i++) {
@@ -26,6 +36,11 @@ export function toObject(arr) {
   return res;
 }
 
+/**
+ * 使用foo.bar的方式获取对象中的属性值
+ * @param {*} object { aaa: { bbb: { ccc: 123 } } }
+ * @param {*} prop "aaa.bbb.ccc"
+ */
 export const getValueByPath = function (object, prop) {
   prop = prop || '';
   const paths = prop.split('.');
@@ -43,6 +58,16 @@ export const getValueByPath = function (object, prop) {
   }
   return result;
 };
+
+/**
+ * 给于一个path路径标识符数组，系统通过对标识符数组对对象内部数据进行访问，直到找到底部
+ * @param {*} obj
+ * @param {*} path
+ * @param {*} strict
+ * obj = { region: '',  delivery: false  }
+ * path = 'delivery';
+ * 返回值  {"o":{"region":"","delivery":false},"k":"delivery","v":false}
+ */
 
 export function getPropByPath(obj, path, strict) {
   let tempObj = obj;
@@ -64,16 +89,17 @@ export function getPropByPath(obj, path, strict) {
     }
   }
   return {
-    o: tempObj,
-    k: keyArr[i],
-    v: tempObj ? tempObj[keyArr[i]] : null,
+    o: tempObj, // 原数组对象
+    k: keyArr[i], //属性key
+    v: tempObj ? tempObj[keyArr[i]] : null, //属性value
   };
 }
-
+// 生成一个随机的ID 基于random
 export const generateId = function () {
   return Math.floor(Math.random() * 10000);
 };
 
+// 判断对象是否值相等
 export const valueEquals = (a, b) => {
   // see: https://stackoverflow.com/questions/3115982/how-to-check-if-two-arrays-are-equal-with-javascript
   if (a === b) return true;
@@ -85,6 +111,8 @@ export const valueEquals = (a, b) => {
   }
   return true;
 };
+// 转义正则特殊字符
+// escapeRegexpString('[lodash](https://lodash.com/)')  返回  '[lodash](https://lodash.com/)'
 
 export const escapeRegexpString = (value = '') =>
   String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
@@ -115,6 +143,7 @@ export const coerceTruthyValueToArray = function (val) {
   }
 };
 
+// 浏览器特性/UA判断
 export const isIE = function () {
   return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode));
 };
@@ -127,6 +156,7 @@ export const isFirefox = function () {
   return !Vue.prototype.$isServer && !!window.navigator.userAgent.match(/firefox/i);
 };
 
+// 自动添加前缀 ms-/webkit-
 export const autoprefixer = function (style) {
   if (typeof style !== 'object') return style;
   const rules = ['transform', 'transition', 'animation'];
@@ -152,15 +182,19 @@ export const kebabCase = function (str) {
   return str.replace(hyphenateRE, '$1-$2').replace(hyphenateRE, '$1-$2').toLowerCase();
 };
 
+// 字符串首字母大写
 export const capitalize = function (str) {
   if (!isString(str)) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+// 比较两个对象是否相等
+// if they are plain objects, do they have the same shape?
 export const looseEqual = function (a, b) {
   const isObjectA = isObject(a);
   const isObjectB = isObject(b);
   if (isObjectA && isObjectB) {
+    //如果a,b不为空且都是对象
     return JSON.stringify(a) === JSON.stringify(b);
   } else if (!isObjectA && !isObjectB) {
     return String(a) === String(b);
@@ -223,7 +257,7 @@ export const isEmpty = function (val) {
 
   return false;
 };
-
+// 动画节流
 export function rafThrottle(fn) {
   let locked = false;
   return function (...args) {
